@@ -1,0 +1,210 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - Kindergarten</title>
+  <!-- Boostrap css -->
+  <link rel="stylesheet" href="~/css/bootstrap.min.personalized.css" asp-append-version="true" />
+
+  <!-- Fonts cdn-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- My styles -->
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  @*<link rel="stylesheet" href="~/RepositorioInstitucionalDigital.styles.css" asp-append-version="true" />*@
+
+  <!-- Boxicons Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+  <!-- Icons Fontawesome cdn -->
+  <script src="https://kit.fontawesome.com/56d0ffeffa.js"
+          crossorigin="anonymous"></script>
+
+  <!-- Aos (animation library) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- Sweetalert2 script -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
+  <!-- Sweetalert2 css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+
+  <!-- Datatables -->
+
+  <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+
+
+
+  <!-- Page icon -->
+  <link rel="icon" href="~/images/icon.png" />
+</head>
+<body class="d-flex flex-column vh-100">
+
+  @if (!SignInManager.IsSignedIn(User))
+  {
+    <header class="mb-3">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-white shadow">
+        <div class="container">
+          <a class="navbar-brand text-white" asp-controller="Home" asp-action="Index">
+            <img src="~/images/icon.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+            Kindergarten
+          </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Index"><i class="fas fa-home mx-2"></i>Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Index" asp-fragment="work"><i class="fa-solid fa-briefcase me-2"></i>Forma de trabajo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Index" asp-fragment="contact"><i class="fas fa-id-card-alt mx-2"></i>Contacto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Index" asp-fragment="mailbox"><i class="fas fa-inbox mx-2"></i>Buzón</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Privacy"><i class="fas fa-user-shield mx-2"></i>Privacidad</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+              <a type="button" class="btn btn-outline-secondary me-2" asp-area="Identity" asp-page="/Account/Register">
+                <i class="fas fa-user-edit mx-2"></i>Registrar
+              </a>
+              <a type="button" class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Login">
+                <i class="fas fa-sign-in-alt mx-2"></i>Iniciar sesion
+              </a>
+            </ul>
+          </div>
+
+        </div>
+      </nav>
+    </header>
+    <main class="flex-shrink-0">
+      <div class="container">
+        @RenderBody()
+      </div>
+    </main>
+    <footer class="d-block mt-auto py-5 bg-secondary">
+      <div class="container">
+        <span class="text-white">
+          &copy; 2023 - Kindergarten - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+        </span>
+      </div>
+    </footer>
+  }
+  else
+  {
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+
+    <div id="body-pd">
+      <header class="header" id="header">
+        <div class="header_toggle">
+          <i class="bx bx-menu" id="header-toggle"></i>
+        </div>
+        <a class="header_img" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+          <img src="~/images/avatar.png" alt="" />
+        </a>
+      </header>
+
+      <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+          <div>
+            <a class="nav_logo" asp-controller="Home" asp-action="Index">
+              <i class="fas fa-school nav_logo-icon"></i>
+              <span class="nav_logo-name">Kindergarten</span>
+            </a>
+            <div class="nav_list">
+              <a class="nav_link" asp-controller="Home" asp-action="Index">
+                <i class='bx bx-home-alt-2 nav_icon'></i>
+                <span class="nav_name">Inicio</span>
+              </a>
+
+              @if (User.IsInRole("SUPERADMIN"))
+              {
+                <a class="nav_link" asp-controller="Superadmin" asp-action="Index">
+                  <i class="bx bx-user nav_icon"></i>
+                  <span class="nav_name">Usuarios</span>
+                </a>
+                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadRoles">
+                  <i class="far fa-address-book nav_icon"></i>
+                  <span class="nav_name">Roles</span>
+                </a>
+              }
+
+              <a class="nav_link" asp-controller="Teacher" asp-action="Index">
+                <i class="fas fa-graduation-cap nav_icon"></i>
+                <span class="nav_name">Alumnos</span>
+              </a>
+
+              @*<a href="#" class="nav_link">
+            <i class="bx bx-folder nav_icon"></i>
+            <span class="nav_name">Publicaciones</span>
+            </a>
+            <a href="#" class="nav_link">
+            <i class="bx bx-message-square-detail nav_icon"></i>
+            <span class="nav_name">Contacto</span>
+            </a>
+            <a href="#" class="nav_link">
+            <i class="bx bx-bar-chart-alt-2 nav_icon"></i>
+            <span class="nav_name">Dashboard</span>
+            </a>*@
+            </div>
+          </div>
+          @*          <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit" class="dropdown-item">Cerrar sesion</button>
+        </form>*@
+          @* <a href="#" class="nav_link">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">SignOut</span>
+        </a>*@
+          <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" style="background: none; border:none" class="nav_link">
+              <i class="bx bx-log-out nav_icon"></i>
+              <span class="nav_name">Cerrar sesion</span>
+            </button>
+          </form>
+        </nav>
+      </div>
+
+      <main class="container">
+        @RenderBody()
+      </main>
+    </div>
+  }
+
+  <button class="scrollTop hidden btn-outline-primary">
+    <i class="fa-solid fa-circle-up"></i>
+  </button>
+
+  <!-- JQuery js -->
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+  <!-- Bootstrap js -->
+  <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+
+  <!-- Aos JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" asp-append-version="true"></script>
+
+  <!-- My scripts js -->
+  <script src="~/js/site.js" asp-append-version="true"></script>
+
+  <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+
+  <script src="~/js/datatables.js" asp-append-version="true"></script>
+
+  @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

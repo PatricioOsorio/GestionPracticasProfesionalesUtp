@@ -1,0 +1,40 @@
+﻿@model List<Student>
+
+@{
+  ViewData["Title"] = "Estudiantes";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<a class="btn btn-primary mb-3" asp-controller="Teacher" asp-action="CreateStudent">
+  <i class="fas fa-plus-circle"></i> Crear estudiante
+</a>
+
+<table id="MyTable" class="table table-striped table-hover table-borderless shadow align-middle text-center">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombres</th>
+      <th>Apellido paterno</th>
+      <th>Apellido materno</th>
+      <th>Operaciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var student in Model)
+    {
+      <tr>
+        <td>@student.StudentId</td>
+        <td>@student.Nombres</td>
+        <td>@student.ApellidoPat</td>
+        <td>@student.ApellidoMat</td>
+        <td class="d-flex justify-content-center g-3">
+          <a asp-controller="Teacher" asp-action="ShowStudent" asp-route-id="@student.StudentId" class="btn btn-info mx-1 disabled"><i class="fas fa-info-circle"></i> Ver</a>
+          <a asp-controller="Teacher" asp-action="UpdateStudent" asp-route-id="@student.StudentId" class="btn btn-warning mx-1"><i class="fas fa-edit"></i> Editar</a>
+          <a id="AlertaEliminarStudent" data-id="@student.StudentId" data-username="@student.Nombres" class="btn btn-danger mx-1"><i class="fas fa-minus-circle"></i> Borrar</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,389 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+  <section class="row mb-5 pt-5" data-aos="fade-up">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">¡Bievenido!</h1>
+        <p class="lead">Más informacion...</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Accion primaria</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Accion secundaria</button>
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+        <img class="rounded-lg-3" src="https://cdn.wallpapersafari.com/44/82/w7KPMb.png" alt="" width="720">
+      </div>
+    </div>
+  </section>
+
+  <section class="row mb-5" data-aos="fade-up">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-cottonbro-studio-3662666.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-lina-kivaka-1741230.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-naomi-shi-1001914.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-natalie-bond-3913426.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <section id="work" class="mb-5">
+    <h2 class="text-center fw-bold display-4 text-gradient" data-aos="zoom-in-up">
+      Forma de trabajo
+    </h2>
+    <p data-aos="zoom-in">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
+      numquam odit incidunt earum suscipit dignissimos quas? Cumque
+      consequuntur officia expedita quidem repellat molestiae soluta
+      voluptatem ipsam asperiores. Quos, repellendus aut!
+    </p>
+
+    <div class="row" data-aos="fade-right">
+      <img src="~/images/svg/children (1).svg" alt="" class="col-lg-6" />
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" data-aos="fade-left">
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+      <img src="~/images/svg/children (2).svg" alt="" class="col-lg-6" />
+    </div>
+
+    <div class="row" data-aos="fade-right">
+      <img src="~/images/svg/children (3).svg" alt="" class="col-lg-6" />
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" data-aos="fade-left">
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+      <img src="~/images/svg/children (4).svg" alt="" class="col-lg-6" />
+    </div>
+  </section>
+}
+else
+{
+
+  <div class="row vh-100 d-flex justify-content-center align-items-center">
+    <h1 class="text-center fw-bold display-4"
+        data-aos="fade-up"
+        data-aos-duration="2000">
+      Bienvenido a
+      <span class="text-gradient">Kindergarten</span> un kinder :D
+    </h1>
+  </div>
+
+  <section id="hero" class="row mb-5" data-aos="fade-up">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="~/images/svg/children.svg"
+             class="d-block mx-lg-auto img-fluid"
+             alt="Bootstrap Themes"
+             width="700"
+             height="500"
+             loading="lazy" />
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Kindergarten</h1>
+        <p class="lead">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae,
+          adipisci at praesentium dolore fuga commodi porro reiciendis sequi
+          debitis nisi. Odit adipisci quaerat ex, tempore inventore ea
+          molestiae iusto eos.
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a href="login.html"
+             type="button"
+             class="btn btn-primary btn-lg px-4 me-md-2">
+            <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesion
+          </a>
+          <a href="register.html"
+             type="button"
+             class="btn btn-outline-secondary btn-lg px-4">
+            <i class="fas fa-user-edit me-1"></i>Registrase
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row mb-5" data-aos="fade-up">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-cottonbro-studio-3662666.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-lina-kivaka-1741230.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-naomi-shi-1001914.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="~/images/carrousel/pexels-natalie-bond-3913426.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <section id="work" class="mb-5">
+    <h2 class="text-center fw-bold display-4 text-gradient" data-aos="zoom-in-up">
+      Forma de trabajo
+    </h2>
+    <p data-aos="zoom-in">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
+      numquam odit incidunt earum suscipit dignissimos quas? Cumque
+      consequuntur officia expedita quidem repellat molestiae soluta
+      voluptatem ipsam asperiores. Quos, repellendus aut!
+    </p>
+
+    <div class="row" data-aos="fade-right">
+      <img src="~/images/svg/children (1).svg" alt="" class="col-lg-6" />
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" data-aos="fade-left">
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+      <img src="~/images/svg/children (2).svg" alt="" class="col-lg-6" />
+    </div>
+
+    <div class="row" data-aos="fade-right">
+      <img src="~/images/svg/children (3).svg" alt="" class="col-lg-6" />
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" data-aos="fade-left">
+      <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <h3>Subtitle</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptatem nulla eligendi veritatis quae magni, laudantium
+          perspiciatis hic id distinctio impedit, eum commodi, quo iure
+          expedita eveniet. Cupiditate omnis rerum fuga.
+        </p>
+      </div>
+      <img src="~/images/svg/children (4).svg" alt="" class="col-lg-6" />
+    </div>
+  </section>
+
+  <section id="contact" class="row mb-5">
+    <h2 class="text-center fw-bold display-4 text-gradient" data-aos="zoom-in-up">Contacto</h2>
+    <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right">
+      <img src="~/images/svg/form.svg  " class="img-fluid" alt="" />
+    </div>
+    <div class="col-lg-6" data-aos="fade-left">
+      <form action="#" id="form-contact">
+        <div class="form-floating mb-3">
+          <input type="text"
+                 class="form-control"
+                 id="fullname-student"
+                 name="fullname-student"
+                 placeholder="name@example.com"
+                 required />
+          <label for="fullname-student">Nombre completo</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="date"
+                 class="form-control"
+                 id="birthday"
+                 name="birthday"
+                 required />
+          <label for="birthday">Fecha de nacimiento</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <select class="form-select" id="floatingSelect" required>
+            <!-- <option selected>---</option> -->
+            <option value="man">Hombre</option>
+            <option value="woman">Mujer</option>
+          </select>
+          <label for="floatingSelect">Selecciona sexo</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="number"
+                 class="form-control"
+                 id="age"
+                 name="age"
+                 placeholder="edad"
+                 required
+                 min="2"
+                 max="7" />
+          <label for="age">Edad</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text"
+                 class="form-control"
+                 id="curp"
+                 name="curp"
+                 placeholder="curp"
+                 required
+                 minlength="18"
+                 maxlength="18"
+                 pattern="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)" />
+          <label for="curp">Curp</label>
+        </div>
+
+        <div class="mb-3">
+          <label for="file" class="form-label">Acta nacimiento</label>
+          <input class="form-control" type="file" id="file" required />
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text"
+                 class="form-control"
+                 id="fullname-tutor"
+                 name="fullname-tutor"
+                 placeholder="name@example.com"
+                 required />
+          <label for="fullname-tutor">Nombre completo del tutor</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="email"
+                 class="form-control"
+                 id="email"
+                 name="email"
+                 placeholder="email"
+                 required />
+          <label for="email">Correo electronico del tutor</label>
+        </div>
+
+        <button class="btn btn-primary">
+          <i class="fas fa-paper-plane me-1"></i>Enviar
+        </button>
+        <button class="btn btn-outline-secondary" type="reset">
+          <i class="fas fa-trash me-1"></i>Limpiar
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section id="mailbox" class="row mb-3">
+    <h2 class="text-center fw-bold display-4 text-gradient" data-aos="zoom-in-up">Buzón</h2>
+    <div class="col-lg-6" data-aos="fade-right">
+      <form action="#" id="form-mailbox">
+        <div class="form-floating mb-3">
+          <input type="text"
+                 class="form-control"
+                 id="subject"
+                 name="subject"
+                 placeholder="name@example.com"
+                 required />
+          <label for="subject">Asunto</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="email"
+                 class="form-control"
+                 id="email"
+                 name="email"
+                 placeholder="email"
+                 required />
+          <label for="email">Correo electronico</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <textarea class="form-control"
+                    placeholder="Aquí va tu comentario"
+                    id="comment"
+                    required></textarea>
+          <label for="comment">Comentarios</label>
+        </div>
+
+        <button class="btn btn-primary">
+          <i class="fas fa-paper-plane me-1"></i>Enviar
+        </button>
+
+        <button class="btn btn-outline-secondary" type="reset">
+          <i class="fas fa-trash me-1"></i>Limpiar
+        </button>
+      </form>
+    </div>
+    <div class="col-lg-6" data-aos="fade-left">
+      <img class="img-fluid" src="~/images/svg/mail3.svg" alt="" />
+    </div>
+  </section>
+}
