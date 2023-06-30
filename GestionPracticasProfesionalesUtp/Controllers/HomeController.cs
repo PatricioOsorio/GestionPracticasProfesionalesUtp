@@ -20,26 +20,8 @@ namespace GestionPracticasProfesionalesUtp.Controllers
       _roleManager = roleManager;
     }
 
-    //[Authorize(Roles = "SYSADMIN")]
     public IActionResult IndexAsync()
     {
-      //var user = await _userManager.FindByEmailAsync("PatricioMiguel_12@hotmail.com");
-
-      //if (user == null)
-      //{
-      //  await _roleManager.CreateAsync(new IdentityRole("ADMIN"));
-      //  await _roleManager.CreateAsync(new IdentityRole("SUPERADMIN"));
-
-      //  var newUser = new IdentityUser()
-      //  {
-      //    UserName = "Patricio",
-      //    Email = "PatricioMiguel_12@hotmail.com",
-      //    EmailConfirmed = true
-      //  };
-
-      //  await _userManager.CreateAsync(newUser, "Pato12345.");
-      //  await _userManager.AddToRoleAsync(newUser, "SUPERADMIN");
-      //}
       return View();
     }
 

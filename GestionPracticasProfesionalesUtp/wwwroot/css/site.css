@@ -16,7 +16,7 @@ body {
 
 .text-gradient {
   color: #4defa7;
-  background-image: -webkit-linear-gradient(130deg, #FFE4E1 0%, var(--bs-primary) 100%);
+  background-image: -webkit-linear-gradient(130deg, #2F4858 0%, var(--bs-primary) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   text-fill-color: transparent;
@@ -59,7 +59,7 @@ body {
   min-height: inherit;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 32px 0 rgba(111, 0, 0, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border-radius: 15px;
@@ -69,7 +69,7 @@ body {
 .circle {
   width: 100px;
   height: 100px;
-  background: linear-gradient(145deg, #ff2e63, #252a34);
+  background: linear-gradient(145deg, #006620, #92F6A3);
   border-radius: 50%;
   position: absolute;
   animation: move-up 2s ease-in infinite alternate-reverse;
