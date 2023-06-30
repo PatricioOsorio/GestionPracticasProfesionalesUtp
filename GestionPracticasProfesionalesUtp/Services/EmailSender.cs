@@ -32,7 +32,7 @@ namespace GestionPracticasProfesionalesUtp.Services
       var client = new SendGridClient(apiKey);
       var msg = new SendGridMessage()
       {
-        From = new EmailAddress("pato_test@hotmail.com", "Kindergarten"),
+        From = new EmailAddress("pato_test@hotmail.com", "GestionPracticasProfesionalesUtp"),
         Subject = subject,
         PlainTextContent = message,
         HtmlContent = message
