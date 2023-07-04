@@ -4,6 +4,7 @@ using GestionPracticasProfesionalesUtp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPracticasProfesionalesUtp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230704165624_AddStudents")]
+    partial class AddStudents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,24 +23,6 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
-                {
-                    b.Property<string>("CoordinadorPracticaId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Departamento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Facultad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("CoordinadorPracticaId");
-
-                    b.ToTable("CoordinadorPracticas");
-                });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Students", b =>
                 {
@@ -272,17 +256,6 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
-                {
-                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
-                        .WithOne("CoordinadorPractica")
-                        .HasForeignKey("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", "CoordinadorPracticaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Students", b =>
                 {
                     b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
@@ -347,9 +320,6 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Users", b =>
                 {
-                    b.Navigation("CoordinadorPractica")
-                        .IsRequired();
-
                     b.Navigation("Student")
                         .IsRequired();
                 });

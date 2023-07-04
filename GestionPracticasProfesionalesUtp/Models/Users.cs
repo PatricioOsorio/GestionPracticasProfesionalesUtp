@@ -22,5 +22,11 @@ namespace GestionPracticasProfesionalesUtp.Models
     [Column(TypeName = "nvarchar(50)")]
     [Display(Name = "Apellido materno")]
     public string? ApellidoMaterno { get; set; }
+
+    // Agregado: Propiedad de navegación inversa para establecer la relación uno a uno
+    public Students Student { get; set; }
+
+    // Agregado: Propiedad de navegación inversa para establecer la relación uno a uno
+    public CoordinadorPracticas CoordinadorPractica { get; set; }
   }
 }

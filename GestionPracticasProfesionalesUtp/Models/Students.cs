@@ -9,21 +9,26 @@ namespace GestionPracticasProfesionalesUtp.Models
   public class Students
   {
     [Key]
-    public int StudentId { get; set; }
+    [Required]
+    [Column(TypeName = "nvarchar(10)")]
+    [Display(Name = "Matrícula")]
+    public string Matricula { get; set; }
 
-    [PersonalData]
-    [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Nombres")]
-    public string Nombres { get; set; }
+    [Required]
+    [ForeignKey(nameof(User))]
+    public string UserId { get; set; }
 
-    [PersonalData]
+    [Required]
     [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Apellido Paterno")]
-    public string ApellidoPat { get; set; }
+    [Display(Name = "Carrera")]
+    public string Carrera { get; set; }
 
-    [PersonalData]
+    [Required]
     [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Apellido Materno")]
-    public string ApellidoMat { get; set; }
+    [Display(Name = "Semestre")]
+    public string Semestre { get; set; }
+
+    // Propiedad de navegación hacia el usuario
+    public Users User { get; set; }
   }
 }
