@@ -43,6 +43,8 @@ using (var scope = app.Services.CreateScope())
     await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
     await ContextSeed.SeedStudentAsync(userManager, roleManager, context);
     await ContextSeed.SeedCoordinadorPracticasAsync(userManager, roleManager, context);
+    await ContextSeed.SeedOrganizacionAsync(userManager, roleManager, context);
+
 
 
   }

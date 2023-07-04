@@ -33,6 +33,8 @@ namespace GestionPracticasProfesionalesUtp.Data
 
     public DbSet<Students> Students { get; set; }
     public DbSet<CoordinadorPracticas> CoordinadorPracticas { get; set; }
+    public DbSet<Organizaciones> Organizaciones { get; set; }
+
 
   }
 }

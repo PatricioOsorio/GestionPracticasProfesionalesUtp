@@ -94,6 +94,7 @@ namespace GestionPracticasProfesionalesUtp.Data
 
       }
     }
+
     public static async Task SeedCoordinadorPracticasAsync(
      UserManager<Users> userManager,
      RoleManager<IdentityRole> roleManager, ApplicationDbContext context
@@ -132,6 +133,24 @@ namespace GestionPracticasProfesionalesUtp.Data
       }
     }
 
+    public static async Task SeedOrganizacionAsync(
+       UserManager<Users> userManager,
+       RoleManager<IdentityRole> roleManager, ApplicationDbContext context
+     )
+    {
+      // Create Organizacion record
+      var newOrganizacion = new Organizaciones()
+      {
+        //OrganizacionId = newUser.Id,
+        Nombre = "TecAsociation",
+        Descripcion = "Empresa de tecnologia con ambito en...",
+        Direccion = "Puebla, Mexico",
+        Telefono = "2222222222",
+        Correo = "tecasociation@hotmail.com"
+      };
 
+      context.Organizaciones.Add(newOrganizacion);
+      await context.SaveChangesAsync();
+    }
   }
 }
