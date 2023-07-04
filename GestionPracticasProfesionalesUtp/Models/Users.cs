@@ -6,24 +6,21 @@ using System.Xml.Linq;
 
 namespace GestionPracticasProfesionalesUtp.Models
 {
-  public class Student
+  public class Users : IdentityUser
   {
-    [Key]
-    public int StudentId { get; set; }
+    [PersonalData]
+    [Column(TypeName = "nvarchar(50)")]
+    [Display(Name = "Nombre")]
+    public string? Nombre { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Nombres")]
-    public string Nombres { get; set; }
+    [Display(Name = "Apellido paterno")]
+    public string? ApellidoPaterno { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Apellido Paterno")]
-    public string ApellidoPat { get; set; }
-
-    [PersonalData]
-    [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Apellido Materno")]
-    public string ApellidoMat { get; set; }
+    [Display(Name = "Apellido materno")]
+    public string? ApellidoMaterno { get; set; }
   }
 }

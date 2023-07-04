@@ -6,15 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionPracticasProfesionalesUtp.Data
 {
-  public class ApplicationDbContext : IdentityDbContext
+  public class ApplicationDbContext : IdentityDbContext<Users>
   {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+    }
+
     // Usar modelos
-    public DbSet<IdentityUser> User { get; set; }
-    public DbSet<Student> Students { get; set; }
+    //public DbSet<Users> Users { get; set; }
+    public DbSet<Students> Students { get; set; }
   }
 }

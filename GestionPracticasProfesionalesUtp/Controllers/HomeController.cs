@@ -10,10 +10,10 @@ namespace GestionPracticasProfesionalesUtp.Controllers
   public class HomeController : Controller
   {
     private readonly ILogger<HomeController> _logger;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<Users> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public HomeController(ILogger<HomeController> logger, UserManager<Users> userManager, RoleManager<IdentityRole> roleManager)
     {
       _logger = logger;
       _userManager = userManager;

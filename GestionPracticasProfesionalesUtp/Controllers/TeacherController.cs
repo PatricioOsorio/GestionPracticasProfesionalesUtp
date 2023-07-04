@@ -8,11 +8,11 @@ namespace GestionPracticasProfesionalesUtp.Controllers
 {
   public class TeacherController : Controller
   {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<Users> _userManager;
     private readonly ApplicationDbContext _context;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public TeacherController(UserManager<IdentityUser> userManager, ApplicationDbContext context,
+    public TeacherController(UserManager<Users> userManager, ApplicationDbContext context,
       RoleManager<IdentityRole> roleManager)
     {
       _userManager = userManager;
@@ -27,7 +27,7 @@ namespace GestionPracticasProfesionalesUtp.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateStudent(Student student)
+    public async Task<IActionResult> CreateStudent(Students student)
     {
       if (ModelState.IsValid)
       {
@@ -63,7 +63,7 @@ namespace GestionPracticasProfesionalesUtp.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateStudent(int id, Student student)
+    public async Task<IActionResult> UpdateStudent(int id, Students student)
     {
       if (id != student.StudentId)
       {

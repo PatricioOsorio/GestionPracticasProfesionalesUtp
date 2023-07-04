@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GestionPracticasProfesionalesUtp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
@@ -15,7 +16,7 @@ namespace GestionPracticasProfesionalesUtp.Data
   public static class ContextSeed
   {
     public static async Task SeedRolesAsync(
-        UserManager<IdentityUser> userManager,
+        UserManager<Users> userManager,
         RoleManager<IdentityRole> roleManager
       )
     {
@@ -27,12 +28,12 @@ namespace GestionPracticasProfesionalesUtp.Data
     }
 
     public static async Task SeedSuperAdminAsync(
-      UserManager<IdentityUser> userManager,
+      UserManager<Users> userManager,
       RoleManager<IdentityRole> roleManager
     )
     {
       //Seed Default User
-      var defaultUser = new IdentityUser()
+      var defaultUser = new Users()
       {
         UserName = "patriciomiguel_12@hotmail.com",
         Email = "patriciomiguel_12@hotmail.com",
@@ -51,12 +52,12 @@ namespace GestionPracticasProfesionalesUtp.Data
     }
 
     public static async Task SeedTeacherAsync(
-  UserManager<IdentityUser> userManager,
+  UserManager<Users> userManager,
   RoleManager<IdentityRole> roleManager
 )
     {
       //Seed Default User
-      var teacherUser = new IdentityUser()
+      var teacherUser = new Users()
       {
         UserName = "teacher@hotmail.com",
         Email = "teacher@hotmail.com",

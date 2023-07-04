@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using GestionPracticasProfesionalesUtp.Data;
 using GestionPracticasProfesionalesUtp.Services;
+using GestionPracticasProfesionalesUtp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
@@ -36,7 +37,7 @@ using (var scope = app.Services.CreateScope())
   try
   {
     var context = services.GetRequiredService<ApplicationDbContext>();
-    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var userManager = services.GetRequiredService<UserManager<Users>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     await ContextSeed.SeedRolesAsync(userManager, roleManager);
     await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);

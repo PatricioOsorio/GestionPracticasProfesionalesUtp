@@ -1,16 +1,16 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Registrar";
+  ViewData["Title"] = "Registrar";
 }
 
-<div class="row vh-100 d-flex justify-content-center">
-  <article class="mycard">
+<div class="row d-flex justify-content-center">
+  <article class="mycard my-5">
     <div class="circle"></div>
     <div class="circle"></div>
     <div class="card__content p-5" data-aos="zoom-in">
 
-      <h1 class="text-center mb-4" data-aos="zoom-in" data-aos-delay="300">
+      <h1 class="text-center mb-4" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
         Crear nueva cuenta
       </h1>
       <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -18,7 +18,8 @@
         <!-- Email input -->
         <div class="form-floating mb-3"
              data-aos="fade-right"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           <input asp-for="Input.Email"
                  class="form-control"
                  autocomplete="username"
@@ -27,10 +28,47 @@
           <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
+        <!-- Nombre input -->
+        <div class="form-floating mb-3"
+             data-aos="fade-right"
+             data-aos-delay="300"
+             data-aos-once="true">
+          <input asp-for="Input.Nombre"
+                 class="form-control"
+                 aria-required="Nombre" />
+          <label asp-for="Input.Nombre" class="form-label"></label>
+          <span asp-validation-for="Input.Nombre" class="text-danger"></span>
+        </div>
+
+        <!-- Apellido paterno input -->
+        <div class="form-floating mb-3"
+             data-aos="fade-right"
+             data-aos-delay="300"
+             data-aos-once="true">
+          <input asp-for="Input.ApellidoPaterno"
+                 class="form-control"
+                 aria-required="ApellidoPaterno" />
+          <label asp-for="Input.ApellidoPaterno" class="form-label"></label>
+          <span asp-validation-for="Input.ApellidoPaterno" class="text-danger"></span>
+        </div>
+
+        <!-- Apellido materno input -->
+        <div class="form-floating mb-3"
+             data-aos="fade-right"
+             data-aos-delay="300"
+             data-aos-once="true">
+          <input asp-for="Input.ApellidoMaterno"
+                 class="form-control"
+                 aria-required="ApellidoMaterno" />
+          <label asp-for="Input.ApellidoMaterno" class="form-label"></label>
+          <span asp-validation-for="Input.ApellidoMaterno" class="text-danger"></span>
+        </div>
+
         <!-- Password input -->
         <div class="form-floating mb-3"
              data-aos="fade-left"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
           <label asp-for="Input.Password" class="form-label"></label>
           <span asp-validation-for="Input.Password" class="text-danger"></span>
@@ -39,7 +77,8 @@
         <!-- Confirm Password input -->
         <div class="form-floating mb-3"
              data-aos="fade-right"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
           <label asp-for="Input.ConfirmPassword" class="form-label"></label>
           <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
@@ -52,13 +91,15 @@
                 type="submit"
                 class="btn btn-primary w-100 mx-0 mb-4"
                 data-aos="zoom-in"
-                data-aos-delay="300">
+                data-aos-delay="300"
+                data-aos-once="true">
           <i class="fas fa-user-edit me-1"></i>Registrar
         </button>
 
         <div class="text-center mb-4"
              data-aos="fade-right"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           ¿Ya tienes cuenta?
           <a asp-area="Identity" asp-page="/Account/Login" class="text-decoration-none">Iniciar sesion</a>
         </div>
@@ -68,5 +109,5 @@
   </article>
 </div>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+  <partial name="_ValidationScriptsPartial" />
 }

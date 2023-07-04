@@ -10,11 +10,11 @@ namespace GestionPracticasProfesionalesUtp.Controllers
   [Authorize(Roles = "SUPERADMIN")]
   public class SuperadminController : Controller
   {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<Users> _userManager;
     private readonly ApplicationDbContext _context;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public SuperadminController(UserManager<IdentityUser> userManager, ApplicationDbContext context,
+    public SuperadminController(UserManager<Users> userManager, ApplicationDbContext context,
         RoleManager<IdentityRole> roleManager)
     {
       _userManager = userManager;
