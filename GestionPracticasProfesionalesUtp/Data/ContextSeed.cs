@@ -58,7 +58,8 @@ namespace GestionPracticasProfesionalesUtp.Data
 
     public static async Task SeedStudentAsync(
       UserManager<Users> userManager,
-      RoleManager<IdentityRole> roleManager, ApplicationDbContext context
+      RoleManager<IdentityRole> roleManager,
+      ApplicationDbContext context
     )
     {
       //Seed Default User
@@ -97,7 +98,8 @@ namespace GestionPracticasProfesionalesUtp.Data
 
     public static async Task SeedCoordinadorPracticasAsync(
      UserManager<Users> userManager,
-     RoleManager<IdentityRole> roleManager, ApplicationDbContext context
+     RoleManager<IdentityRole> roleManager,
+     ApplicationDbContext context
    )
     {
       //Seed Default User
@@ -116,7 +118,7 @@ namespace GestionPracticasProfesionalesUtp.Data
         if (user == null)
         {
           await userManager.CreateAsync(newUser, "Pato123.");
-          await userManager.AddToRoleAsync(newUser, Roles.ESTUDIANTE.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA.ToString());
 
           // Create Student record
           var coordinadorUser = new CoordinadorPracticas()
@@ -135,7 +137,8 @@ namespace GestionPracticasProfesionalesUtp.Data
 
     public static async Task SeedOrganizacionAsync(
        UserManager<Users> userManager,
-       RoleManager<IdentityRole> roleManager, ApplicationDbContext context
+       RoleManager<IdentityRole> roleManager,
+       ApplicationDbContext context
      )
     {
       // Create Organizacion record
@@ -151,6 +154,36 @@ namespace GestionPracticasProfesionalesUtp.Data
 
       context.Organizaciones.Add(newOrganizacion);
       await context.SaveChangesAsync();
+    }
+
+    public static async Task SeedOportunidadPracticasAsync(
+       UserManager<Users> userManager,
+       RoleManager<IdentityRole> roleManager,
+       ApplicationDbContext context
+     )
+    {
+
+      // Obtener la organización existente (puedes ajustar esto según tus necesidades)
+      var organizacionExistente = await context.Organizaciones.FirstOrDefaultAsync();
+
+      if (organizacionExistente != null)
+      {
+        // Crear una nueva oportunidad de prácticas
+        var oportunidadPracticas = new OportunidadPracticas
+        {
+          OrganizacionId = organizacionExistente.OrganizacionId,
+          Descripcion = "Descripción de la oportunidad de prácticas",
+          Requisitos = "Requisitos para la oportunidad de prácticas",
+          FechaInicio = DateTime.Now,
+          FechaFin = DateTime.Now.AddDays(30)
+        };
+
+        // Agregar la oportunidad de prácticas al contexto
+        context.OportunidadPracticas.Add(oportunidadPracticas);
+
+        // Guardar los cambios en la base de datos
+        await context.SaveChangesAsync();
+      }
     }
   }
 }

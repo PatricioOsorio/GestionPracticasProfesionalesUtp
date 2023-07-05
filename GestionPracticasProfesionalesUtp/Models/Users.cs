@@ -11,16 +11,19 @@ namespace GestionPracticasProfesionalesUtp.Models
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
     [Display(Name = "Nombre")]
+    [Required]
     public string? Nombre { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
     [Display(Name = "Apellido paterno")]
+    [Required]
     public string? ApellidoPaterno { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
     [Display(Name = "Apellido materno")]
+    [Required]
     public string? ApellidoMaterno { get; set; }
 
     // Agregado: Propiedad de navegación inversa para establecer la relación uno a uno

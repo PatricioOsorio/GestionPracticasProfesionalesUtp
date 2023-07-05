@@ -98,7 +98,7 @@ document.addEventListener('click', (e) => {
   // Alerta borrar rol
   if (e.target.matches('#AlertaEliminarRol')) {
     Swal.fire({
-      title: `¿Eliminar rol: <span class="text-primary">${e.target.dataset.name}</span>?`,
+      title: `¿Eliminar rol: <span class="text-primary">${e.target.dataset.role}</span>?`,
       text: 'No podrás revertir esto.',
       icon: 'warning',
       showCloseButton: true,
@@ -111,7 +111,7 @@ document.addEventListener('click', (e) => {
       if (result.isConfirmed) {
         $.ajax({
           type: 'POST',
-          url: '/Administracion/BorrarRol',
+          url: '/Superadmin/DeleteRole',
           data: { id: e.target.dataset.id },
           cache: false,
           success: function (response) {
@@ -121,7 +121,7 @@ document.addEventListener('click', (e) => {
               icon: 'success',
               confirmButtonColor: 'var(--bs-primary)',
             }).then(function () {
-              location.href = '/Administracion/ListaRoles';
+              location.href = '/Superadmin/ReadRoles';
             });
           },
           error: function (error) {
@@ -159,40 +159,6 @@ document.addEventListener('click', (e) => {
               confirmButtonColor: 'var(--bs-primary)',
             }).then(function () {
               location.href = '/Superadmin/Index';
-            });
-          },
-        });
-      }
-    });
-  }
-
-  // Alerta borrar alumno
-  if (e.target.matches('#AlertaEliminarStudent')) {
-    Swal.fire({
-      title: `¿Eliminar estudiante: <span class="text-primary">${e.target.dataset.username}</span>?`,
-      text: 'No podrás revertir esto.',
-      icon: 'warning',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Sí, bórralo.',
-      cancelButtonText: '¡No, cancelar!',
-      confirmButtonColor: 'var(--bs-danger)',
-      cancelButtonColor: 'var(--bs-secondary)',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type: 'POST',
-          url: '/Teacher/DeleteStudent',
-          data: { id: e.target.dataset.id },
-          cache: false,
-          success: function (response) {
-            Swal.fire({
-              title: '¡Eliminado!',
-              text: 'El alumno ha sido eliminado.',
-              icon: 'success',
-              confirmButtonColor: 'var(--bs-primary)',
-            }).then(function () {
-              location.href = '/Teacher/Index';
             });
           },
         });

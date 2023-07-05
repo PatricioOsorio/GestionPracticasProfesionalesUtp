@@ -115,32 +115,25 @@
           <div>
             <a class="nav_logo" asp-controller="Home" asp-action="Index">
               <i class="fas fa-school nav_logo-icon"></i>
-              <span class="nav_logo-name">Gestión practicas progesionales</span>
+              <span class="nav_logo-name">Gestión practicas profesionales</span>
             </a>
             <div class="nav_list">
               <a class="nav_link" asp-controller="Home" asp-action="Index">
-                <i class='bx bx-home-alt-2 nav_icon'></i>
+                <i class='fas fa-home nav_icon'></i>
                 <span class="nav_name">Inicio</span>
               </a>
 
               @if (User.IsInRole("SUPERADMIN"))
               {
-                <a class="nav_link" asp-controller="Superadmin" asp-action="Index">
-                  <i class="bx bx-user nav_icon"></i>
-                  <span class="nav_name">Usuarios</span>
-                </a>
                 <a class="nav_link" asp-controller="Superadmin" asp-action="ReadRoles">
-                  <i class="far fa-address-book nav_icon"></i>
+                  <i class="fas fa-id-card nav_icon"></i>
                   <span class="nav_name">Roles</span>
                 </a>
+                <a class="nav_link" asp-controller="Superadmin" asp-action="Index">
+                  <i class="fas fa-users nav_icon"></i>
+                  <span class="nav_name">Usuarios</span>
+                </a>
               }
-
-              <a class="nav_link" asp-controller="Teacher" asp-action="Index">
-                <i class="fas fa-graduation-cap nav_icon"></i>
-                <span class="nav_name">Alumnos</span>
-              </a>
-
-
             </div>
           </div>
           <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

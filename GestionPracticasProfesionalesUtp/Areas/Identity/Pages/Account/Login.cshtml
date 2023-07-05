@@ -55,27 +55,31 @@
                 type="submit"
                 class="btn btn-primary w-100 mx-0 mb-4"
                 data-aos="zoom-in"
-                data-aos-delay="300">
+                data-aos-delay="300"
+                data-aos-once="true">
           <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesion
         </button>
 
         <div class="text-center mb-4"
              data-aos="fade-right"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           ¿No tienes cuenta?
           <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">Registrar</a>
         </div>
 
         <div class="text-center mb-4"
              data-aos="fade-left"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           ¿Olvidaste tu contraseña?
           <a id="forgot-password" asp-page="./ForgotPassword" class="text-decoration-none">Recuperar contraseña</a>
         </div>
 
         <div class="text-center mb-4"
              data-aos="fade-right"
-             data-aos-delay="300">
+             data-aos-delay="300"
+             data-aos-once="true">
           ¿No haz confirmado tu cuenta?
           <a iid="resend-confirmation" asp-page="./ResendEmailConfirmation" class="text-decoration-none">Reenviar correo de confirmacion</a>
         </div>

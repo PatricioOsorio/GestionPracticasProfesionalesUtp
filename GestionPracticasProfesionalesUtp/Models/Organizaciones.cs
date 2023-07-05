@@ -8,9 +8,7 @@ namespace GestionPracticasProfesionalesUtp.Models
   public class Organizaciones
   {
     [Key]
-    [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Display(Name = "Matrícula")]
     public string OrganizacionId { get; set; }
 
     [Required]
@@ -35,5 +33,8 @@ namespace GestionPracticasProfesionalesUtp.Models
     [Column(TypeName = "nvarchar(15)")]
     [Display(Name = "Telefono")]
     public string Telefono { get; set; }
+
+    // que representa la colección de oportunidades de prácticas relacionadas con la organización.
+    public ICollection<OportunidadPracticas> OportunidadPracticas { get; set; }
   }
 }

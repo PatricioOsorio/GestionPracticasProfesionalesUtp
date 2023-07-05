@@ -29,12 +29,22 @@ namespace GestionPracticasProfesionalesUtp.Data
         .HasOne(c => c.User)
         .WithOne(u => u.CoordinadorPractica)
         .HasForeignKey<CoordinadorPracticas>(c => c.CoordinadorPracticaId);
+
+
+      // Estblece autoincremental el id de Organizaciones
+      builder.Entity<Organizaciones>()
+        .Property(o => o.OrganizacionId)
+        .ValueGeneratedOnAdd();
+
+      builder.Entity<OportunidadPracticas>()
+          .HasOne(op => op.Organizacion)
+          .WithMany(o => o.OportunidadPracticas)
+          .HasForeignKey(op => op.OrganizacionId);
     }
 
     public DbSet<Students> Students { get; set; }
     public DbSet<CoordinadorPracticas> CoordinadorPracticas { get; set; }
     public DbSet<Organizaciones> Organizaciones { get; set; }
-
-
+    public DbSet<OportunidadPracticas> OportunidadPracticas { get; set; }
   }
 }

@@ -8,34 +8,29 @@
 }
 
 
-<h1>Editar usuario</h1>
 
-<form asp-action="UpdateUser">
-  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-  <div class="row">
-    <div class="col-md-6">
-      <input type="hidden" asp-for="Id" />
-      <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control text-uppercase" onkeyup="javascript:this.value=this.value.toUpperCase();" required />
-        <span asp-validation-for="Email" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="PasswordHash" class="control-label"></label>
-        <input asp-for="PasswordHash" class="form-control text-uppercase" onkeyup="javascript:this.value=this.value.toUpperCase();" required />
-        <span asp-validation-for="PasswordHash" class="text-danger"></span>
-      </div>
+<div class="bg-white rounded mt-4 p-5 shadow-lg">
+  <h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">Editar usuario</h1>
 
-     
-    </div>
-    <div class="col-md-6 mb-4">
-      <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
+  <form asp-action="UpdateUser">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label asp-for="Email" class="form-label"></label>
         <input asp-for="Email" class="form-control" required />
         <span asp-validation-for="Email" class="text-danger"></span>
       </div>
-      <div class="form-group">
-        <label>Tipo</label>
+
+      <div class="col-md-6">
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Rol</label>
         <select class="form-select" aria-label="Default select example" name="rol" required>
           <option selected disabled hidden>---</option>
           @foreach (var rol in roleManager.Roles)
@@ -51,12 +46,29 @@
           }
         </select>
       </div>
+
+      <div class="col-md-6">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" required />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+      </div>
+
+      <div class="col-md-6">
+        <label asp-for="ApellidoPaterno" class="form-label"></label>
+        <input asp-for="ApellidoPaterno" class="form-control" required />
+        <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+      </div>
+
+      <div class="col-md-6">
+        <label asp-for="ApellidoMaterno" class="form-label"></label>
+        <input asp-for="ApellidoMaterno" class="form-control" required />
+        <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="submit" value="Guardar" class="btn btn-primary" />
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Actualizar</button>
+      <a class="btn btn-outline-secondary" asp-action="Index"><i class="fas fa-arrow-left me-1"></i>Regresar</a>
     </div>
-  </div>
-  <div>
-    <a asp-action="SelectUser">Regresar</a>
-  </div>
-</form>
+  </form>
+</div>

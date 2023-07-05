@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPracticasProfesionalesUtp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230704185922_AddOrganizaciones")]
+    [Migration("20230704193213_AddOrganizaciones")]
     partial class AddOrganizaciones
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

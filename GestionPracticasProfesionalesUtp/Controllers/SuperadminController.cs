@@ -24,21 +24,131 @@ namespace GestionPracticasProfesionalesUtp.Controllers
     // ==================================
     // ADMINISTRACION DE ROLES
     // ==================================
+    // Read[GET] - Roles
     public async Task<IActionResult> ReadRoles()
     {
+      var roles = _roleManager.Roles.ToList();
+      return View(roles);
+    }
+
+    // Read[GET] - Roles/CreateRole
+    public IActionResult CreateRole()
+    {
       return View();
+    }
+
+    // Update[POST] - Roles/CreateRole
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateRole([Bind("Name")] IdentityRole role)
+    {
+      if (ModelState.IsValid)
+      {
+        var result = await _roleManager.CreateAsync(role);
+        if (result.Succeeded)
+        {
+          return RedirectToAction(nameof(ReadRoles));
+        }
+        foreach (var error in result.Errors)
+        {
+          ModelState.AddModelError(string.Empty, error.Description);
+        }
+      }
+      return View(role);
+    }
+
+    // Read[GET] - Roles/UpdateRole/5
+    public async Task<IActionResult> UpdateRole(string id)
+    {
+      if (string.IsNullOrEmpty(id))
+      {
+        return NotFound();
+      }
+
+      var role = await _roleManager.FindByIdAsync(id);
+      if (role == null)
+      {
+        return NotFound();
+      }
+      return View(role);
+    }
+
+    // Update[POST]: Roles/UpdateRole/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateRole(string id, [Bind("Id,Name,ConcurrencyStamp")] IdentityRole role)
+    {
+      if (id != role.Id)
+      {
+        return NotFound();
+      }
+
+      if (ModelState.IsValid)
+      {
+        var result = await _roleManager.UpdateAsync(role);
+        if (result.Succeeded)
+        {
+          return RedirectToAction(nameof(ReadRoles));
+        }
+        foreach (var error in result.Errors)
+        {
+          ModelState.AddModelError(string.Empty, error.Description);
+        }
+      }
+      return View(role);
+    }
+
+    // Delete[GET] - User/DeleteUser
+    public async Task<IActionResult> DeleteRoleAsync(string id)
+    {
+      if (string.IsNullOrEmpty(id))
+      {
+        return NotFound();
+      }
+
+      var role = await _roleManager.FindByIdAsync(id);
+      if (role == null)
+      {
+        return NotFound();
+      }
+
+      return View(role);
+    }
+
+    // Delete[POST]: Roles/Eliminar/5
+    [HttpPost]
+    public async Task<IActionResult> DeleteRole(string id)
+    {
+      var role = await _roleManager.FindByIdAsync(id);
+      if (role == null)
+      {
+        return NotFound();
+      }
+
+      var result = await _roleManager.DeleteAsync(role);
+      if (result.Succeeded)
+      {
+        return RedirectToAction(nameof(ReadRoles));
+      }
+
+      foreach (var error in result.Errors)
+      {
+        ModelState.AddModelError(string.Empty, error.Description);
+      }
+
+      return View(role);
     }
 
     // ==================================
     // ADMINISTRACION DE LOS USUARIOS
     // ==================================
-    // Read - User
+    // Read[GET] - User
     public async Task<IActionResult> IndexAsync()
     {
       return View(await _userManager.Users.ToListAsync());
     }
 
-    //Update - User
+    // Update[GET] - User/UpdateUser
     public async Task<IActionResult> UpdateUser(string id)
     {
       if (id == null)
@@ -60,9 +170,10 @@ namespace GestionPracticasProfesionalesUtp.Controllers
       return View(user);
     }
 
+    // Update[POST] - User/UpdateUser/id
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateUser(string id, IdentityUser user, string rol)
+    public async Task<IActionResult> UpdateUser(string id, Users user, string rol)
     {
       if (id != user.Id)
       {
@@ -74,7 +185,9 @@ namespace GestionPracticasProfesionalesUtp.Controllers
       usuario.Id = user.Id;
       usuario.Email = user.Email;
       usuario.PhoneNumber = user.PhoneNumber;
-      usuario.EmailConfirmed = user.EmailConfirmed;
+      usuario.Nombre = user.Nombre;
+      usuario.ApellidoPaterno = user.ApellidoPaterno;
+      usuario.ApellidoMaterno = user.ApellidoMaterno;
 
       var result = await _userManager.UpdateAsync(usuario);
       if (result.Succeeded)
@@ -97,12 +210,13 @@ namespace GestionPracticasProfesionalesUtp.Controllers
       return View(user);
     }
 
-    // Delete - User
+    // Delete[GET] - User/DeleteUser
     public IActionResult DeleteUser()
     {
       return View();
     }
 
+    // Delete[POST] - User/DeleteUser/id
     [HttpPost]
     public async Task<IActionResult> DeleteUser(string id)
     {
