@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using GestionPracticasProfesionalesUtp.Data;
 using GestionPracticasProfesionalesUtp.Models;
 using Microsoft.EntityFrameworkCore;
+using GestionPracticasProfesionalesUtp.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GestionPracticasProfesionalesUtp.Controllers
 {
@@ -99,21 +101,21 @@ namespace GestionPracticasProfesionalesUtp.Controllers
     }
 
     // Delete[GET] - User/DeleteUser
-    public async Task<IActionResult> DeleteRoleAsync(string id)
-    {
-      if (string.IsNullOrEmpty(id))
-      {
-        return NotFound();
-      }
+    //public async Task<IActionResult> DeleteRoleAs(string id)
+    //{
+    //  if (string.IsNullOrEmpty(id))
+    //  {
+    //    return NotFound();
+    //  }
 
-      var role = await _roleManager.FindByIdAsync(id);
-      if (role == null)
-      {
-        return NotFound();
-      }
+    //  var role = await _roleManager.FindByIdAsync(id);
+    //  if (role == null)
+    //  {
+    //    return NotFound();
+    //  }
 
-      return View(role);
-    }
+    //  return View(role);
+    //}
 
     // Delete[POST]: Roles/Eliminar/5
     [HttpPost]
@@ -143,102 +145,169 @@ namespace GestionPracticasProfesionalesUtp.Controllers
     // ADMINISTRACION DE LOS USUARIOS
     // ==================================
     // Read[GET] - User
-    public async Task<IActionResult> IndexAsync()
+    public async Task<IActionResult> ReadUsers()
     {
       return View(await _userManager.Users.ToListAsync());
     }
 
-    // Update[GET] - User/UpdateUser
-    public async Task<IActionResult> UpdateUser(string id)
+    // Mostrar el formulario para crear un nuevo usuario
+    public async Task<IActionResult> CreateUser()
     {
-      if (id == null)
+      // Obtener la lista de roles para mostrar en la vista
+      List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+
+      CreateUserViewModel model = new CreateUserViewModel
       {
-        return NotFound();
-      }
+        Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name })
+      };
 
-      var user = await _userManager.FindByIdAsync(id);
-      if (user == null)
-      {
-        return NotFound();
-      }
-
-      IList<string> role = await _userManager.GetRolesAsync(user);
-      string role1 = role.FirstOrDefault().ToString();
-
-      ViewBag.UserRol = role1;
-
-      return View(user);
+      return View("CreateUser", model);
     }
 
-    // Update[POST] - User/UpdateUser/id
+    // Guardar un nuevo usuario
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateUser(string id, Users user, string rol)
+    public async Task<IActionResult> CreateUser(CreateUserViewModel model)
     {
-      if (id != user.Id)
+      if (ModelState.IsValid)
       {
-        return NotFound();
-      }
-
-      var usuario = await _userManager.FindByIdAsync(user.Id);
-
-      usuario.Id = user.Id;
-      usuario.Email = user.Email;
-      usuario.PhoneNumber = user.PhoneNumber;
-      usuario.Nombre = user.Nombre;
-      usuario.ApellidoPaterno = user.ApellidoPaterno;
-      usuario.ApellidoMaterno = user.ApellidoMaterno;
-
-      var result = await _userManager.UpdateAsync(usuario);
-      if (result.Succeeded)
-      {
-        IList<string> role = await _userManager.GetRolesAsync(usuario);
-        string role1 = role.FirstOrDefault().ToString();
-
-        if (rol == null)
-          rol = role1;
-
-        var result1 = await _userManager.RemoveFromRoleAsync(usuario, role1);
-        if (result1.Succeeded)
+        Users user = new Users
         {
-          var result2 = await _userManager.AddToRoleAsync(usuario, rol);
-          if (result2.Succeeded)
-            return RedirectToAction(nameof(Index));
+          Email = model.Email,
+          UserName = model.Email,
+          Nombre = model.Nombre,
+          ApellidoPaterno = model.ApellidoPaterno,
+          ApellidoMaterno = model.ApellidoMaterno,
+          EmailConfirmed = true,
+        };
+
+        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+
+        if (result.Succeeded)
+        {
+          // Asignar el rol seleccionado al nuevo usuario
+          IdentityRole role = await _roleManager.FindByIdAsync(model.RoleId);
+          if (role != null)
+          {
+            await _userManager.AddToRoleAsync(user, role.Name);
+          }
+
+          return RedirectToAction("ReadUsers");
+        }
+
+        foreach (IdentityError error in result.Errors)
+        {
+          ModelState.AddModelError(string.Empty, error.Description);
         }
       }
 
-      return View(user);
+      // Obtener la lista de roles para volver a mostrarla en caso de error
+      List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+      model.Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name });
+
+      return View(model);
     }
 
-    // Delete[GET] - User/DeleteUser
-    public IActionResult DeleteUser()
-    {
-      return View();
-    }
-
-    // Delete[POST] - User/DeleteUser/id
+    
     [HttpPost]
     public async Task<IActionResult> DeleteUser(string id)
     {
-      if (id == null)
+      Users user = await _userManager.FindByIdAsync(id);
+
+      if (user != null)
       {
-        return NotFound();
+        IdentityResult result = await _userManager.DeleteAsync(user);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ReadUsers");
+        }
+
+        foreach (IdentityError error in result.Errors)
+        {
+          ModelState.AddModelError(string.Empty, error.Description);
+        }
       }
 
-      var user = await _userManager.Users
-          .FirstOrDefaultAsync(u => u.Id == id);
-      if (user == null)
+      return NotFound();
+    }
+
+    // Mostrar formulario para editar un usuario
+    public async Task<IActionResult> UpdateUser(string id)
+    {
+      Users user = await _userManager.FindByIdAsync(id);
+
+      string selectedRoleId = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+      if (user != null)
       {
-        return NotFound();
+        // Obtener la lista de roles para mostrarla en la vista
+        List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+        var model = new UpdateUserViewModel
+        {
+          Id = user.Id,
+          Email = user.Email,
+          Nombre = user.Nombre,
+          ApellidoPaterno = user.ApellidoPaterno,
+          ApellidoMaterno = user.ApellidoMaterno,
+          Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }),
+          SelectedRoleId = selectedRoleId // Obtener el rol actual del usuario
+        };
+
+        return View(model);
       }
 
-      var result = await _userManager.DeleteAsync(user);
-      if (result.Succeeded)
+      return NotFound();
+    }
+
+    // Actualizar un usuario
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateUser(UpdateUserViewModel viewModel)
+    {
+      if (ModelState.IsValid)
       {
-        return RedirectToAction(nameof(Index));
+        Users user = await _userManager.FindByIdAsync(viewModel.Id);
+
+        if (user != null)
+        {
+          user.Email = viewModel.Email;
+          user.UserName = viewModel.Email;
+          user.Nombre = viewModel.Nombre;
+          user.ApellidoPaterno = viewModel.ApellidoPaterno;
+          user.ApellidoMaterno = viewModel.ApellidoMaterno;
+
+          // Actualizar el usuario
+          IdentityResult result = await _userManager.UpdateAsync(user);
+
+          if (result.Succeeded)
+          {
+            // Asignar el nuevo rol al usuario
+            IdentityRole role = await _roleManager.FindByIdAsync(viewModel.RoleId);
+            if (role != null)
+            {
+              // Remover los roles existentes del usuario
+              await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
+
+              // Asignar el nuevo rol al usuario
+              await _userManager.AddToRoleAsync(user, role.Name);
+            }
+
+            return RedirectToAction("ReadUsers");
+          }
+
+          foreach (IdentityError error in result.Errors)
+          {
+            ModelState.AddModelError(string.Empty, error.Description);
+          }
+        }
       }
 
-      return RedirectToAction(nameof(Index));
+      // Obtener la lista de roles nuevamente para volver a mostrarla en caso de error
+      List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+      viewModel.Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name });
+
+      return View(viewModel);
     }
   }
 }

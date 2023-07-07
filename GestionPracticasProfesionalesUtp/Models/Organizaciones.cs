@@ -8,33 +8,35 @@ namespace GestionPracticasProfesionalesUtp.Models
   public class Organizaciones
   {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [ForeignKey(nameof(User))]
     public string OrganizacionId { get; set; }
 
     [Required]
-    [Column(TypeName = "nvarchar(50)")]
+    [Column(TypeName = "nvarchar(200)")]
     [Display(Name = "Nombre empresa")]
-    public string Nombre { get; set; }
+    public string NombreOrganizacion { get; set; }
 
-    [Column(TypeName = "nvarchar(150)")]
+    [Column(TypeName = "nvarchar(500)")]
     [Display(Name = "Descripcion empresa")]
     public string Descripcion { get; set; }
 
-    [Required]
-    [Column(TypeName = "nvarchar(100)")]
-    [Display(Name = "Direccion empresa")]
+
+    [Column(TypeName = "nvarchar(500)")]
+    [Display(Name = "Descripcion empresa")]
     public string Direccion { get; set; }
 
-    [Required]
-    [Column(TypeName = "nvarchar(50)")]
-    [Display(Name = "Correo electronico")]
-    public string Correo { get; set; }
+    // Propiedad de navegación inversa para establecer la relación uno a muchos con OportunidadPracticas
+    public ICollection<OportunidadesPracticas> OportunidadPracticas { get; set; }
 
-    [Column(TypeName = "nvarchar(15)")]
-    [Display(Name = "Telefono")]
-    public string Telefono { get; set; }
+    [ForeignKey(nameof(CoordinadorOrganizacion))]
+    [Display(Name = "Coordinador organización")]
+    public string CoordinadorOrganizacionId { get; set; }
 
-    // que representa la colección de oportunidades de prácticas relacionadas con la organización.
-    public ICollection<OportunidadPracticas> OportunidadPracticas { get; set; }
+    public CoordinadorOrganizacion CoordinadorOrganizacion { get; set; }
+
+    // Propiedad de navegación inversa para establecer la relación con Users
+    [ForeignKey(nameof(OrganizacionId))]
+    public Users User { get; set; }
+
   }
 }

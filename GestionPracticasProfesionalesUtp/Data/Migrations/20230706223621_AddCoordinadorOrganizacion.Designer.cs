@@ -4,6 +4,7 @@ using GestionPracticasProfesionalesUtp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPracticasProfesionalesUtp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230706223621_AddCoordinadorOrganizacion")]
+    partial class AddCoordinadorOrganizacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CoordinadorOrganizaciones", (string)null);
+                    b.ToTable("CoordinadorOrganizaciones");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
@@ -56,7 +58,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasKey("CoordinadorPracticaId");
 
-                    b.ToTable("CoordinadorPracticas", (string)null);
+                    b.ToTable("CoordinadorPracticas");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadPracticas", b =>
@@ -87,7 +89,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasIndex("OrganizacionId");
 
-                    b.ToTable("OportunidadPracticas", (string)null);
+                    b.ToTable("OportunidadPracticas");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Organizaciones", b =>
@@ -116,7 +118,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasIndex("CoordinadorOrganizacionId");
 
-                    b.ToTable("Organizaciones", (string)null);
+                    b.ToTable("Organizaciones");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Students", b =>
@@ -141,7 +143,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Users", b =>

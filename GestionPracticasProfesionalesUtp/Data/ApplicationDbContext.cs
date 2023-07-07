@@ -1,5 +1,4 @@
-﻿//using GestionPracticasProfesionalesUtp.Models;
-using GestionPracticasProfesionalesUtp.Models;
+﻿using GestionPracticasProfesionalesUtp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,21 +29,40 @@ namespace GestionPracticasProfesionalesUtp.Data
         .WithOne(u => u.CoordinadorPractica)
         .HasForeignKey<CoordinadorPracticas>(c => c.CoordinadorPracticaId);
 
-
       // Estblece autoincremental el id de Organizaciones
       builder.Entity<Organizaciones>()
         .Property(o => o.OrganizacionId)
         .ValueGeneratedOnAdd();
 
-      builder.Entity<OportunidadPracticas>()
+      builder.Entity<OportunidadesPracticas>()
           .HasOne(op => op.Organizacion)
           .WithMany(o => o.OportunidadPracticas)
           .HasForeignKey(op => op.OrganizacionId);
+
+      // Relación 1 a muchos entre CoordinadorOrganizacion y Organizaciones
+      builder.Entity<CoordinadorOrganizacion>()
+          .HasMany(c => c.Organizaciones)
+          .WithOne(o => o.CoordinadorOrganizacion)
+          .HasForeignKey(o => o.CoordinadorOrganizacionId);
+
+      // Establecer relación 1 a muchos entre Organizaciones y OportunidadPracticas
+      builder.Entity<Organizaciones>()
+          .HasMany(o => o.OportunidadPracticas)
+          .WithOne(op => op.Organizacion)
+          .HasForeignKey(op => op.OrganizacionId);
+
+      // Establecer relación 1 a muchos entre CoordinadorOrganizacion y OportunidadPracticas
+      builder.Entity<CoordinadorOrganizacion>()
+          .HasMany(co => co.OportunidadPracticas)
+          .WithOne(op => op.CoordinadorOrganizacion)
+          .HasForeignKey(op => op.CoordinadorOrganizacionId);
     }
 
     public DbSet<Students> Students { get; set; }
     public DbSet<CoordinadorPracticas> CoordinadorPracticas { get; set; }
+    public DbSet<OportunidadesPracticas> OportunidadPracticas { get; set; }
     public DbSet<Organizaciones> Organizaciones { get; set; }
-    public DbSet<OportunidadPracticas> OportunidadPracticas { get; set; }
+    public DbSet<CoordinadorOrganizacion> CoordinadorOrganizacion { get; set; }
+
   }
 }

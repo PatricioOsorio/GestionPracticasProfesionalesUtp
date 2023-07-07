@@ -9,7 +9,7 @@
 
 <div class="bg-white rounded mt-4 p-5 shadow-lg">
   <h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
-  <a class="btn btn-primary mb-3" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus me-1"></i>Crear usuario</a>
+  <a class="btn btn-primary mb-3" asp-action="CreateUser"><i class="fas fa-user-plus me-1"></i>Crear usuario</a>
 
   @if (Model.Any())
   {

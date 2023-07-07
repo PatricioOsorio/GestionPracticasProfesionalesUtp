@@ -39,11 +39,13 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<ApplicationDbContext>();
     var userManager = services.GetRequiredService<UserManager<Users>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+  
     await ContextSeed.SeedRolesAsync(userManager, roleManager);
-    await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
-    await ContextSeed.SeedStudentAsync(userManager, roleManager, context);
-    await ContextSeed.SeedCoordinadorPracticasAsync(userManager, roleManager, context);
-    await ContextSeed.SeedOrganizacionAsync(userManager, roleManager, context);
+    await ContextSeed.SeedUserSuperadminAsync(userManager, roleManager);
+    await ContextSeed.SeedUserStudentAsync(userManager, roleManager, context);
+    await ContextSeed.SeedUserCoordinadorPracticaEscuelaAsync(userManager, roleManager, context);
+    await ContextSeed.SeedUserCoordinadorPracticaOrganizacionAsync(userManager, roleManager, context);
+    await ContextSeed.SeedUserOrganizacionAsync(userManager, roleManager, context);
     await ContextSeed.SeedOportunidadPracticasAsync(userManager, roleManager, context);
   }
   catch (Exception ex)

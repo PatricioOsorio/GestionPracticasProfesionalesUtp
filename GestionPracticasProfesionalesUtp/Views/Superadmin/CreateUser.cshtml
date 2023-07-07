@@ -1,15 +1,13 @@
-﻿@model UpdateUserViewModel
+﻿@model CreateUserViewModel
 
 @{
-  ViewData["Title"] = "Actualizar usuario";
+  ViewData["Title"] = "Crear usuario";
 }
 
 <div class="bg-white rounded mt-4 p-5 shadow-lg">
   <h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
 
-  <form asp-action="UpdateUser">
-
-    <input type="hidden" asp-for="Id" />
+  <form asp-action="CreateUser">
 
     <p asp-validation-summary="ModelOnly" class="text-danger"></p>
 
@@ -36,12 +34,25 @@
       </div>
 
       <div class="col-md-6">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+      </div>
+      <div class="col-md-6">
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+      </div>
+      <div class="col-md-6">
         <label asp-for="RoleId" class="control-label"></label>
         <select asp-for="RoleId" class="form-select" required>
-          <option value="">Selecciona un rol</option>
-          @foreach (var role in Model.Roles)
+          <option value="">Seleccion un rol</option>
+          @if (Model.Roles != null && Model.Roles.Any())
           {
-            <option value="@role.Value" selected="@(role.Value == Model.SelectedRoleId ? "selected" : null)">@role.Text</option>
+            foreach (var role in Model.Roles)
+            {
+              <option value="@role.Value">@role.Text</option>
+            }
           }
         </select>
         <span asp-validation-for="RoleId" class="text-danger"></span>

@@ -158,7 +158,7 @@ document.addEventListener('click', (e) => {
               icon: 'success',
               confirmButtonColor: 'var(--bs-primary)',
             }).then(function () {
-              location.href = '/Superadmin/Index';
+              location.href = '/Superadmin/ReadUsers';
             });
           },
         });

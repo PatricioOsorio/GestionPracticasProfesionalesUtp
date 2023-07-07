@@ -3,14 +3,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
+using System.Data.OracleClient;
 
 namespace GestionPracticasProfesionalesUtp.Data
 {
   public enum Roles
   {
     SUPERADMIN,
-    COORDINADOR_PRACTICA,
     ESTUDIANTE,
+    COORDINADOR_PRACTICA_ESCUELA,
+    COORDINADOR_PRACTICA_ORGANIZACION,
     ORGANIZACION
   }
 
@@ -23,13 +25,13 @@ namespace GestionPracticasProfesionalesUtp.Data
     {
       //Seed Roles
       await roleManager.CreateAsync(new IdentityRole(Roles.SUPERADMIN.ToString()));
-      await roleManager.CreateAsync(new IdentityRole(Roles.COORDINADOR_PRACTICA.ToString()));
       await roleManager.CreateAsync(new IdentityRole(Roles.ESTUDIANTE.ToString()));
+      await roleManager.CreateAsync(new IdentityRole(Roles.COORDINADOR_PRACTICA_ESCUELA.ToString()));
+      await roleManager.CreateAsync(new IdentityRole(Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString()));
       await roleManager.CreateAsync(new IdentityRole(Roles.ORGANIZACION.ToString()));
-
     }
 
-    public static async Task SeedSuperAdminAsync(
+    public static async Task SeedUserSuperadminAsync(
       UserManager<Users> userManager,
       RoleManager<IdentityRole> roleManager
     )
@@ -56,7 +58,7 @@ namespace GestionPracticasProfesionalesUtp.Data
       }
     }
 
-    public static async Task SeedStudentAsync(
+    public static async Task SeedUserStudentAsync(
       UserManager<Users> userManager,
       RoleManager<IdentityRole> roleManager,
       ApplicationDbContext context
@@ -65,9 +67,9 @@ namespace GestionPracticasProfesionalesUtp.Data
       //Seed Default User
       var newUser = new Users()
       {
-        Nombre = "AlumnoNombre",
-        ApellidoPaterno = "AP",
-        ApellidoMaterno = "AM",
+        Nombre = "Juan",
+        ApellidoPaterno = "Perez",
+        ApellidoMaterno = "Sanchez",
         UserName = "student@hotmail.com",
         Email = "student@hotmail.com",
         EmailConfirmed = true,
@@ -96,20 +98,59 @@ namespace GestionPracticasProfesionalesUtp.Data
       }
     }
 
-    public static async Task SeedCoordinadorPracticasAsync(
+    public static async Task SeedUserCoordinadorPracticaEscuelaAsync(
      UserManager<Users> userManager,
      RoleManager<IdentityRole> roleManager,
      ApplicationDbContext context
-   )
+    )
+        {
+          //Seed Default User
+          var newUser = new Users()
+          {
+            Nombre = "Paco",
+            ApellidoPaterno = "ApellidoPaterno",
+            ApellidoMaterno = "ApellidoMaterno",
+            UserName = "coordinador_escuela@hotmail.com",
+            Email = "coordinador_escuela@hotmail.com",
+            EmailConfirmed = true,
+          };
+          if (userManager.Users.All(u => u.Id != newUser.Id))
+          {
+            var user = await userManager.FindByEmailAsync(newUser.Email);
+            if (user == null)
+            {
+              await userManager.CreateAsync(newUser, "Pato123.");
+              await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA_ESCUELA.ToString());
+
+              // Create CoordinadorPracticaEscuela record
+              var coordinadorUser = new CoordinadorPracticas()
+              {
+                CoordinadorPracticaId = newUser.Id,
+                Departamento = "TI",
+                Facultad = "Redes",
+              };
+
+              context.CoordinadorPracticas.Add(coordinadorUser);
+              await context.SaveChangesAsync();
+            }
+
+          }
+        }
+
+    public static async Task SeedUserCoordinadorPracticaOrganizacionAsync(
+     UserManager<Users> userManager,
+     RoleManager<IdentityRole> roleManager,
+     ApplicationDbContext context
+    )
     {
       //Seed Default User
       var newUser = new Users()
       {
-        Nombre = "Coordinador",
-        ApellidoPaterno = "AP",
-        ApellidoMaterno = "AM",
-        UserName = "coordinador@hotmail.com",
-        Email = "coordinador@hotmail.com",
+        Nombre = "Enrique",
+        ApellidoPaterno = "ApellidoPaterno",
+        ApellidoMaterno = "ApellidoMaterno",
+        UserName = "coordinador_organizacion@hotmail.com",
+        Email = "coordinador_organizacion@hotmail.com",
         EmailConfirmed = true,
       };
       if (userManager.Users.All(u => u.Id != newUser.Id))
@@ -118,42 +159,60 @@ namespace GestionPracticasProfesionalesUtp.Data
         if (user == null)
         {
           await userManager.CreateAsync(newUser, "Pato123.");
-          await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
 
           // Create Student record
-          var coordinadorUser = new CoordinadorPracticas()
+          var coordinadorUser = new CoordinadorOrganizacion()
           {
-            CoordinadorPracticaId = newUser.Id,
-            Departamento = "TI",
-            Facultad = "Redes"
+            CoordinadorOrganizacionId = newUser.Id,
+            Area = "Desarrollo",
           };
 
-          context.CoordinadorPracticas.Add(coordinadorUser);
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
           await context.SaveChangesAsync();
         }
 
       }
     }
 
-    public static async Task SeedOrganizacionAsync(
-       UserManager<Users> userManager,
-       RoleManager<IdentityRole> roleManager,
-       ApplicationDbContext context
-     )
+    public static async Task SeedUserOrganizacionAsync(
+      UserManager<Users> userManager,
+      RoleManager<IdentityRole> roleManager,
+      ApplicationDbContext context
+    )
     {
-      // Create Organizacion record
-      var newOrganizacion = new Organizaciones()
+      //Seed Default User
+      var newUser = new Users()
       {
-        //OrganizacionId = newUser.Id,
-        Nombre = "TecAsociation",
-        Descripcion = "Empresa de tecnologia con ambito en...",
-        Direccion = "Puebla, Mexico",
-        Telefono = "2222222222",
-        Correo = "tecasociation@hotmail.com"
+        Nombre = "Emmpresa1",
+        ApellidoPaterno = "Na",
+        ApellidoMaterno = "Na",
+        UserName = "empresa@hotmail.com",
+        Email = "empresa@hotmail.com",
+        EmailConfirmed = true,
       };
+      if (userManager.Users.All(u => u.Id != newUser.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUser.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUser, "Pato123.");
+          await userManager.AddToRoleAsync(newUser, Roles.ORGANIZACION.ToString());
 
-      context.Organizaciones.Add(newOrganizacion);
-      await context.SaveChangesAsync();
+          // Create Student record
+          var organizacionUser = new Organizaciones()
+          {
+            OrganizacionId = newUser.Id,
+            NombreOrganizacion = newUser.Nombre,
+            Descripcion = "desc",
+            Direccion = "dir",
+          };
+
+          context.Organizaciones.Add(organizacionUser);
+          await context.SaveChangesAsync();
+        }
+
+      }
     }
 
     public static async Task SeedOportunidadPracticasAsync(
@@ -169,7 +228,7 @@ namespace GestionPracticasProfesionalesUtp.Data
       if (organizacionExistente != null)
       {
         // Crear una nueva oportunidad de prácticas
-        var oportunidadPracticas = new OportunidadPracticas
+        var oportunidadPracticas = new OportunidadesPracticas
         {
           OrganizacionId = organizacionExistente.OrganizacionId,
           Descripcion = "Descripción de la oportunidad de prácticas",
