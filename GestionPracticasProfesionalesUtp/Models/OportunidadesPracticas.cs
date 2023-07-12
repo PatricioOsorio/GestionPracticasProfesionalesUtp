@@ -19,6 +19,7 @@ namespace GestionPracticasProfesionalesUtp.Models
 
     [Required]
     [StringLength(1000)]
+    [Display(Name = "Descripción")]
     public string Descripcion { get; set; }
 
     [Required]
@@ -27,16 +28,19 @@ namespace GestionPracticasProfesionalesUtp.Models
 
     [Required]
     [DataType(DataType.Date)]
+    [Display(Name = "Fecha inicio")]
     public DateTime FechaInicio { get; set; }
 
     [Required]
     [DataType(DataType.Date)]
+    [Display(Name = "Fecga fin")]
     public DateTime FechaFin { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación muchos a uno con Organizaciones
     public Organizaciones Organizacion { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación muchos a uno con CoordinadorOrganizacion
+    [Display(Name = "Coordinador de la organizacion")]
     public CoordinadorOrganizacion CoordinadorOrganizacion { get; set; }
   }
 }

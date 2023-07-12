@@ -87,6 +87,7 @@ namespace GestionPracticasProfesionalesUtp.Areas.Identity.Pages.Account.Manage
 
       Input = new InputModel
       {
+        Nombre = user.Nombre,
         PhoneNumber = phoneNumber,
         ApellidoPaterno = user.ApellidoPaterno,
         ApellidoMaterno = user.ApellidoMaterno
@@ -137,7 +138,7 @@ namespace GestionPracticasProfesionalesUtp.Areas.Identity.Pages.Account.Manage
       await _userManager.UpdateAsync(user);
 
       await _signInManager.RefreshSignInAsync(user);
-      StatusMessage = "Your profile has been updated";
+      StatusMessage = "Su perfil ha sido actualizado :D";
       return RedirectToPage();
     }
   }
