@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GestionPracticasProfesionalesUtp.Data.Migrations
+namespace GestionPracticasProfesionalesUtp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -38,7 +38,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CoordinadorOrganizaciones", (string)null);
+                    b.ToTable("CoordinadorOrganizacion");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
@@ -56,18 +56,25 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasKey("CoordinadorPracticaId");
 
-                    b.ToTable("CoordinadorPracticas", (string)null);
+                    b.ToTable("CoordinadorPracticas");
                 });
 
-            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadPracticas", b =>
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas", b =>
                 {
-                    b.Property<string>("OportunidadPracticaId")
+                    b.Property<int>("OportunidadPracticaId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OportunidadPracticaId"), 1L, 1);
+
+                    b.Property<string>("CoordinadorOrganizacionId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
@@ -81,13 +88,16 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.Property<string>("Requisitos")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("OportunidadPracticaId");
 
+                    b.HasIndex("CoordinadorOrganizacionId");
+
                     b.HasIndex("OrganizacionId");
 
-                    b.ToTable("OportunidadPracticas", (string)null);
+                    b.ToTable("OportunidadPracticas");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Organizaciones", b =>
@@ -116,7 +126,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
                     b.HasIndex("CoordinadorOrganizacionId");
 
-                    b.ToTable("Organizaciones", (string)null);
+                    b.ToTable("Organizaciones");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Students", b =>
@@ -141,7 +151,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Users", b =>
@@ -374,13 +384,21 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadPracticas", b =>
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas", b =>
                 {
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", "CoordinadorOrganizacion")
+                        .WithMany("OportunidadPracticas")
+                        .HasForeignKey("CoordinadorOrganizacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GestionPracticasProfesionalesUtp.Models.Organizaciones", "Organizacion")
                         .WithMany("OportunidadPracticas")
                         .HasForeignKey("OrganizacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CoordinadorOrganizacion");
 
                     b.Navigation("Organizacion");
                 });
@@ -468,6 +486,8 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", b =>
                 {
+                    b.Navigation("OportunidadPracticas");
+
                     b.Navigation("Organizaciones");
                 });
 

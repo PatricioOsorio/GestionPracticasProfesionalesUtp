@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas>
+
+@{
+  ViewData["Title"] = "Publicaciones de estadias";
+}
+
+
+<h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
+
+<div class="table-responsive shadow rounded mb-5 py-3 px-1">
+  <table id="MyTable" class="table table-striped table-hover table-borderless align-middle text-center">
+    <thead>
+      <tr>
+        <th>
+          @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Requisitos)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.FechaInicio)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.FechaFin)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Organizacion)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.CoordinadorOrganizacion)
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Requisitos)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.FechaInicio)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.FechaFin)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Organizacion.OrganizacionId)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.CoordinadorOrganizacion.CoordinadorOrganizacionId)
+          </td>
+          <td>
+            <a asp-action="Details" asp-route-id="@item.OportunidadPracticaId">Details</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

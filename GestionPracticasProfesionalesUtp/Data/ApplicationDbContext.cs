@@ -35,9 +35,16 @@ namespace GestionPracticasProfesionalesUtp.Data
         .ValueGeneratedOnAdd();
 
       builder.Entity<OportunidadesPracticas>()
-          .HasOne(op => op.Organizacion)
-          .WithMany(o => o.OportunidadPracticas)
-          .HasForeignKey(op => op.OrganizacionId);
+        .HasOne(op => op.Organizacion)
+        .WithMany(o => o.OportunidadPracticas)
+        .HasForeignKey(op => op.OrganizacionId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+      builder.Entity<OportunidadesPracticas>()
+          .HasOne(op => op.CoordinadorOrganizacion)
+          .WithMany(co => co.OportunidadPracticas)
+          .HasForeignKey(op => op.CoordinadorOrganizacionId)
+          .OnDelete(DeleteBehavior.Restrict);
 
       // Relación 1 a muchos entre CoordinadorOrganizacion y Organizaciones
       builder.Entity<CoordinadorOrganizacion>()

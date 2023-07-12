@@ -9,20 +9,39 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GestionPracticasProfesionalesUtp.Data.Migrations
+namespace GestionPracticasProfesionalesUtp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230704193213_AddOrganizaciones")]
-    partial class AddOrganizaciones
+    [Migration("20230707213412_Correciones")]
+    partial class Correciones
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", b =>
+                {
+                    b.Property<string>("CoordinadorOrganizacionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CoordinadorOrganizacionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CoordinadorOrganizacion");
+                });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
                 {
@@ -42,33 +61,72 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.ToTable("CoordinadorPracticas");
                 });
 
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas", b =>
+                {
+                    b.Property<int>("OportunidadPracticaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OportunidadPracticaId"), 1L, 1);
+
+                    b.Property<string>("CoordinadorOrganizacionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrganizacionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Requisitos")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("OportunidadPracticaId");
+
+                    b.HasIndex("CoordinadorOrganizacionId");
+
+                    b.HasIndex("OrganizacionId");
+
+                    b.ToTable("OportunidadPracticas");
+                });
+
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Organizaciones", b =>
                 {
                     b.Property<string>("OrganizacionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Correo")
+                    b.Property<string>("CoordinadorOrganizacionId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("NombreOrganizacion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("OrganizacionId");
+
+                    b.HasIndex("CoordinadorOrganizacionId");
 
                     b.ToTable("Organizaciones");
                 });
@@ -107,9 +165,11 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApellidoMaterno")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ApellidoPaterno")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -130,6 +190,7 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NormalizedEmail")
@@ -305,6 +366,15 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", b =>
+                {
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", b =>
                 {
                     b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
@@ -312,6 +382,44 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                         .HasForeignKey("GestionPracticasProfesionalesUtp.Models.CoordinadorPracticas", "CoordinadorPracticaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas", b =>
+                {
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", "CoordinadorOrganizacion")
+                        .WithMany("OportunidadPracticas")
+                        .HasForeignKey("CoordinadorOrganizacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Organizaciones", "Organizacion")
+                        .WithMany("OportunidadPracticas")
+                        .HasForeignKey("OrganizacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CoordinadorOrganizacion");
+
+                    b.Navigation("Organizacion");
+                });
+
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Organizaciones", b =>
+                {
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", "CoordinadorOrganizacion")
+                        .WithMany("Organizaciones")
+                        .HasForeignKey("CoordinadorOrganizacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("OrganizacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoordinadorOrganizacion");
 
                     b.Navigation("User");
                 });
@@ -376,6 +484,18 @@ namespace GestionPracticasProfesionalesUtp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", b =>
+                {
+                    b.Navigation("OportunidadPracticas");
+
+                    b.Navigation("Organizaciones");
+                });
+
+            modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Organizaciones", b =>
+                {
+                    b.Navigation("OportunidadPracticas");
                 });
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.Users", b =>
