@@ -9,8 +9,8 @@
 @if (SignInManager.IsSignedIn(User))
 {
   var user = await UserManager.GetUserAsync(User);
-  var roles = await UserManager.GetRolesAsync(user);
-  var currentRole = roles.FirstOrDefault();
+  var roles = user != null ? await UserManager.GetRolesAsync(user) : null;
+  var currentRole = roles != null ? roles.FirstOrDefault() : null;
 
   <section class="row mb-5 pt-5" data-aos="fade-up">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">

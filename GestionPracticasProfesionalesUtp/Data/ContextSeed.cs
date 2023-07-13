@@ -39,7 +39,7 @@ namespace GestionPracticasProfesionalesUtp.Data
       //Seed Default User
       var newUser = new Users()
       {
-        Nombre = "Patricio",
+        Nombre = "Patricio Miguel",
         ApellidoPaterno = "Osorio",
         ApellidoMaterno = "Osorio",
         UserName = "patriciomiguel_12@hotmail.com",
@@ -54,7 +54,6 @@ namespace GestionPracticasProfesionalesUtp.Data
           await userManager.CreateAsync(newUser, "Pato123.");
           await userManager.AddToRoleAsync(newUser, Roles.SUPERADMIN.ToString());
         }
-
       }
     }
 
@@ -70,8 +69,8 @@ namespace GestionPracticasProfesionalesUtp.Data
         Nombre = "Juan",
         ApellidoPaterno = "Perez",
         ApellidoMaterno = "Sanchez",
-        UserName = "student@hotmail.com",
-        Email = "student@hotmail.com",
+        UserName = "UTP9999999@hotmail.com",
+        Email = "UTP9999999@hotmail.com",
         EmailConfirmed = true,
       };
       if (userManager.Users.All(u => u.Id != newUser.Id))
@@ -85,7 +84,7 @@ namespace GestionPracticasProfesionalesUtp.Data
           // Create Student record
           var studentUser = new Students()
           {
-            Matricula = "UTP0147941",
+            Matricula = "utp9999999".ToUpper(),
             UserId = newUser.Id,
             Carrera = "TI",
             Semestre = "9"
@@ -98,46 +97,174 @@ namespace GestionPracticasProfesionalesUtp.Data
       }
     }
 
-    public static async Task SeedUserCoordinadorPracticaEscuelaAsync(
-     UserManager<Users> userManager,
-     RoleManager<IdentityRole> roleManager,
-     ApplicationDbContext context
-    )
+    public static async Task SeedUserOrganizacionesAsync(
+      UserManager<Users> userManager,
+      RoleManager<IdentityRole> roleManager,
+      ApplicationDbContext context
+      )
+    {
+      //Seed Organizacion - Jabil circuit
+      var newOrganizacionUserJabil = new Users()
+      {
+        Nombre = "Jabil Circuit México",
+        ApellidoPaterno = "NA",
+        ApellidoMaterno = "NA",
+        UserName = "jabil@hotmail.com",
+        Email = "jabil@hotmail.com",
+        EmailConfirmed = true,
+        PhoneNumber = "2222222222"
+      };
+      if (userManager.Users.All(u => u.Id != newOrganizacionUserJabil.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newOrganizacionUserJabil.Email);
+        if (user == null)
         {
-          //Seed Default User
-          var newUser = new Users()
+          await userManager.CreateAsync(newOrganizacionUserJabil, "Pato123.");
+          await userManager.AddToRoleAsync(newOrganizacionUserJabil, Roles.ORGANIZACION.ToString());
+
+          var userOrganizacion = new Organizaciones()
           {
-            Nombre = "Paco",
-            ApellidoPaterno = "ApellidoPaterno",
-            ApellidoMaterno = "ApellidoMaterno",
-            UserName = "coordinador_escuela@hotmail.com",
-            Email = "coordinador_escuela@hotmail.com",
-            EmailConfirmed = true,
+            OrganizacionId = newOrganizacionUserJabil.Id,
+            NombreOrganizacion = newOrganizacionUserJabil.Nombre,
+            Descripcion = "Compañía de manufactura y servicios electrónicos para diversas industrias.",
+            Direccion = "Autopista México-Puebla Km 116.6, Santa Clara, Cuautlancingo, Puebla.",
           };
-          if (userManager.Users.All(u => u.Id != newUser.Id))
-          {
-            var user = await userManager.FindByEmailAsync(newUser.Email);
-            if (user == null)
-            {
-              await userManager.CreateAsync(newUser, "Pato123.");
-              await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA_ESCUELA.ToString());
 
-              // Create CoordinadorPracticaEscuela record
-              var coordinadorUser = new CoordinadorPracticas()
-              {
-                CoordinadorPracticaId = newUser.Id,
-                Departamento = "TI",
-                Facultad = "Redes",
-              };
-
-              context.CoordinadorPracticas.Add(coordinadorUser);
-              await context.SaveChangesAsync();
-            }
-
-          }
+          context.Organizaciones.Add(userOrganizacion);
+          await context.SaveChangesAsync();
         }
+      }
 
-    public static async Task SeedUserCoordinadorPracticaOrganizacionAsync(
+      //Seed Organizacion - La costeña
+      var newOrganizacionUserCostena = new Users()
+      {
+        Nombre = "La Costeña",
+        ApellidoPaterno = "NA",
+        ApellidoMaterno = "NA",
+        UserName = "la_costena@hotmail.com",
+        Email = "la_costena@hotmail.com",
+        EmailConfirmed = true,
+        PhoneNumber = "2222222222"
+      };
+      if (userManager.Users.All(u => u.Id != newOrganizacionUserCostena.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newOrganizacionUserCostena.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newOrganizacionUserCostena, "Pato123.");
+          await userManager.AddToRoleAsync(newOrganizacionUserCostena, Roles.ORGANIZACION.ToString());
+
+          var userOrganizacion = new Organizaciones()
+          {
+            OrganizacionId = newOrganizacionUserCostena.Id,
+            NombreOrganizacion = newOrganizacionUserCostena.Nombre,
+            Descripcion = "Empresa dedicada a la producción y comercialización de alimentos enlatados.\r\n",
+            Direccion = "Calle 15 de Mayo No. 1906, Colonia Centro, Puebla.",
+          };
+
+          context.Organizaciones.Add(userOrganizacion);
+          await context.SaveChangesAsync();
+        }
+      }
+
+      //Seed Organizacion - Grupo Bimbo
+      var newOrganizacionUserBimbo = new Users()
+      {
+        Nombre = "Grupo Bimbo",
+        ApellidoPaterno = "NA",
+        ApellidoMaterno = "NA",
+        UserName = "grupo_bimbo@hotmail.com",
+        Email = "grupo_bimbo@hotmail.com",
+        EmailConfirmed = true,
+        PhoneNumber = "2222222222"
+      };
+      if (userManager.Users.All(u => u.Id != newOrganizacionUserBimbo.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newOrganizacionUserBimbo.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newOrganizacionUserBimbo, "Pato123.");
+          await userManager.AddToRoleAsync(newOrganizacionUserBimbo, Roles.ORGANIZACION.ToString());
+
+          var userOrganizacion = new Organizaciones()
+          {
+            OrganizacionId = newOrganizacionUserBimbo.Id,
+            NombreOrganizacion = newOrganizacionUserBimbo.Nombre,
+            Descripcion = "Empresa de panificación y productos alimenticios con presencia internacional",
+            Direccion = "Avenida Cúmulo de Virgo No. 200, Parque Industrial Finsa, Puebla.",
+          };
+
+          context.Organizaciones.Add(userOrganizacion);
+          await context.SaveChangesAsync();
+        }
+      }
+
+      //Seed Organizacion - Grupo Modelo
+      var newOrganizacionUserModelo = new Users()
+      {
+        Nombre = "Grupo Modelo",
+        ApellidoPaterno = "NA",
+        ApellidoMaterno = "NA",
+        UserName = "grupo_modelo@hotmail.com",
+        Email = "grupo_modelo@hotmail.com",
+        EmailConfirmed = true,
+        PhoneNumber = "2222222222"
+      };
+      if (userManager.Users.All(u => u.Id != newOrganizacionUserModelo.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newOrganizacionUserModelo.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newOrganizacionUserModelo, "Pato123.");
+          await userManager.AddToRoleAsync(newOrganizacionUserModelo, Roles.ORGANIZACION.ToString());
+
+          var userOrganizacion = new Organizaciones()
+          {
+            OrganizacionId = newOrganizacionUserModelo.Id,
+            NombreOrganizacion = newOrganizacionUserModelo.Nombre,
+            Descripcion = "Productor de cerveza reconocido a nivel mundial, con marcas como Corona, Modelo y Victoria.",
+            Direccion = "Calle San Francisco Ocotlán No. 111, Puebla.",
+          };
+
+          context.Organizaciones.Add(userOrganizacion);
+          await context.SaveChangesAsync();
+        }
+      }
+
+      //Seed Organizacion - Audi México
+      var newOrganizacionUserAudi = new Users()
+      {
+        Nombre = "Audi México",
+        ApellidoPaterno = "NA",
+        ApellidoMaterno = "NA",
+        UserName = "audi_mexico@hotmail.com",
+        Email = "audi_mexico@hotmail.com",
+        EmailConfirmed = true,
+        PhoneNumber = "2222222222"
+      };
+      if (userManager.Users.All(u => u.Id != newOrganizacionUserAudi.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newOrganizacionUserAudi.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newOrganizacionUserAudi, "Pato123.");
+          await userManager.AddToRoleAsync(newOrganizacionUserAudi, Roles.ORGANIZACION.ToString());
+
+          var userOrganizacion = new Organizaciones()
+          {
+            OrganizacionId = newOrganizacionUserAudi.Id,
+            NombreOrganizacion = newOrganizacionUserAudi.Nombre,
+            Descripcion = "Planta de producción de automóviles de lujo de la marca Audi.",
+            Direccion = "San José Chiapa, Puebla.",
+          };
+
+          context.Organizaciones.Add(userOrganizacion);
+          await context.SaveChangesAsync();
+        }
+      }
+    }
+
+    public static async Task SeedUserCoordinadorPracticaEscuelaAsync(
      UserManager<Users> userManager,
      RoleManager<IdentityRole> roleManager,
      ApplicationDbContext context
@@ -146,11 +273,11 @@ namespace GestionPracticasProfesionalesUtp.Data
       //Seed Default User
       var newUser = new Users()
       {
-        Nombre = "Enrique",
-        ApellidoPaterno = "ApellidoPaterno",
-        ApellidoMaterno = "ApellidoMaterno",
-        UserName = "coordinador_organizacion@hotmail.com",
-        Email = "coordinador_organizacion@hotmail.com",
+        Nombre = "Paco",
+        ApellidoPaterno = "Díaz",
+        ApellidoMaterno = "Benitez",
+        UserName = "coordinador_escuela@hotmail.com",
+        Email = "coordinador_escuela@hotmail.com",
         EmailConfirmed = true,
       };
       if (userManager.Users.All(u => u.Id != newUser.Id))
@@ -159,105 +286,314 @@ namespace GestionPracticasProfesionalesUtp.Data
         if (user == null)
         {
           await userManager.CreateAsync(newUser, "Pato123.");
-          await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.COORDINADOR_PRACTICA_ESCUELA.ToString());
 
-          // Create Student record
-          var coordinadorUser = new CoordinadorOrganizacion()
+          // Create CoordinadorPracticaEscuela record
+          var coordinadorUser = new CoordinadorPracticas()
           {
-            CoordinadorOrganizacionId = newUser.Id,
-            Area = "Desarrollo",
+            CoordinadorPracticaId = newUser.Id,
+            Departamento = "TI",
+            Facultad = "Redes",
           };
 
-          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          context.CoordinadorPracticas.Add(coordinadorUser);
           await context.SaveChangesAsync();
         }
 
       }
     }
 
-    public static async Task SeedUserOrganizacionAsync(
-    UserManager<Users> userManager,
-    RoleManager<IdentityRole> roleManager,
-    ApplicationDbContext context
+    public static async Task SeedUserCoordinadorPracticaOrganizacionAsync(
+     UserManager<Users> userManager,
+     RoleManager<IdentityRole> roleManager,
+     ApplicationDbContext context
     )
+    {
+      // Seed CoordinadorOrganizacionJabil User
+      var newUserCoordinadorOrganizacionJabil = new Users()
+      {
+        Nombre = "Omar",
+        ApellidoPaterno = "Silva",
+        ApellidoMaterno = "Muñoz",
+        UserName = "coordinador_organizacion_jabil@hotmail.com",
+        Email = "coordinador_organizacion_jabil@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionJabil.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionJabil.Email);
+        if (user == null)
         {
-          //Seed Default User
-          var newUser = new Users()
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionJabil, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionJabil, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
           {
-            Nombre = "Empresa1",
-            ApellidoPaterno = "NA",
-            ApellidoMaterno = "NA",
-            UserName = "empresa@hotmail.com",
-            Email = "empresa@hotmail.com",
-            EmailConfirmed = true,
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionJabil.Id,
+            Area = "Desarrollo de software jabil 1",
           };
-          if (userManager.Users.All(u => u.Id != newUser.Id))
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "Jabil"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "Jabil Circuit México");
+
+          if (organizacion != null)
           {
-            var user = await userManager.FindByEmailAsync(newUser.Email);
-            if (user == null)
-            {
-              await userManager.CreateAsync(newUser, "Pato123.");
-              await userManager.AddToRoleAsync(newUser, Roles.ORGANIZACION.ToString());
-
-              // Create Student record
-              var coordinadorOrganizacion = await context.CoordinadorOrganizacion.FirstOrDefaultAsync();
-
-              var studentUser = new Organizaciones()
-              {
-                OrganizacionId = newUser.Id,
-                NombreOrganizacion = newUser.Nombre,
-                Descripcion = "Esta empresa se encarga de la administracion de tecnoligas emergentes...",
-                Direccion = "Puebla, Mexico",
-                CoordinadorOrganizacionId = coordinadorOrganizacion.CoordinadorOrganizacionId,
-              };
-
-              context.Organizaciones.Add(studentUser);
-              await context.SaveChangesAsync();
-            }
-
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
           }
         }
+      }
 
-    //    public static async Task SeedOportunidadPracticasAsync(
-    //    UserManager<Users> userManager,
-    //    RoleManager<IdentityRole> roleManager,
-    //    ApplicationDbContext context
+      // Seed CoordinadorOrganizacionJabil2 User
+      var newUserCoordinadorOrganizacionJabil2 = new Users()
+      {
+        Nombre = "Rosa",
+        ApellidoPaterno = "Silva",
+        ApellidoMaterno = "Cruz",
+        UserName = "coordinador_organizacion_jabil2@hotmail.com",
+        Email = "coordinador_organizacion_jabil2@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionJabil2.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionJabil2.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionJabil2, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionJabil2, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
+          {
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionJabil2.Id,
+            Area = "Desarrollo de software jabil 2",
+          };
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "Jabil"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "Jabil Circuit México");
+
+          if (organizacion != null)
+          {
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
+          }
+        }
+      }
+
+      // Seed CoordinadorOrganizacionLaCostena User
+      var newUserCoordinadorOrganizacionLaCostena = new Users()
+      {
+        Nombre = "Karen",
+        ApellidoPaterno = "Morillo",
+        ApellidoMaterno = "Martinez",
+        UserName = "coordinador_organizacion_la_costena@hotmail.com",
+        Email = "coordinador_organizacion_la_costena@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionLaCostena.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionLaCostena.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionLaCostena, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionLaCostena, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
+          {
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionLaCostena.Id,
+            Area = "Desarrollo de software la costeña",
+          };
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "La Costeña"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "La Costeña");
+
+          if (organizacion != null)
+          {
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
+          }
+        }
+      }
+
+      // Seed CoordinadorOrganizacionBimbo User
+      var newUserCoordinadorOrganizacionBimbo = new Users()
+      {
+        Nombre = "René",
+        ApellidoPaterno = "Sosa",
+        ApellidoMaterno = "Britez",
+        UserName = "coordinador_organizacion_bimbo@hotmail.com",
+        Email = "coordinador_organizacion_bimbo@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionBimbo.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionBimbo.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionBimbo, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionBimbo, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
+          {
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionBimbo.Id,
+            Area = "Desarrollo de software - Bimbo",
+          };
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "Grupo Bimbo"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "Grupo Bimbo");
+
+          if (organizacion != null)
+          {
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
+          }
+        }
+      }
+
+      // Seed CoordinadorOrganizacionModelo User
+      var newUserCoordinadorOrganizacionModelo = new Users()
+      {
+        Nombre = "Juan Nicolas",
+        ApellidoPaterno = "Romero",
+        ApellidoMaterno = "Torres",
+        UserName = "coordinador_organizacion_modelo@hotmail.com",
+        Email = "coordinador_organizacion_modelo@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionModelo.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionModelo.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionModelo, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionModelo, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
+          {
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionModelo.Id,
+            Area = "Desarrollo de software - Modelo",
+          };
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "Grupo Modelo"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "Grupo Modelo");
+
+          if (organizacion != null)
+          {
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
+          }
+        }
+      }
+
+      // Seed CoordinadorOrganizacionAudi User
+      var newUserCoordinadorOrganizacionAudi = new Users()
+      {
+        Nombre = "Ana Vega",
+        ApellidoPaterno = "Caballero",
+        ApellidoMaterno = "Caballero",
+        UserName = "coordinador_organizacion_audi@hotmail.com",
+        Email = "coordinador_organizacion_audi@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUserCoordinadorOrganizacionAudi.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUserCoordinadorOrganizacionAudi.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUserCoordinadorOrganizacionAudi, "Pato123.");
+          await userManager.AddToRoleAsync(newUserCoordinadorOrganizacionAudi, Roles.COORDINADOR_PRACTICA_ORGANIZACION.ToString());
+
+          // Create CoordinadorOrganizacion record
+          var coordinadorUser = new CoordinadorOrganizacion()
+          {
+            CoordinadorOrganizacionId = newUserCoordinadorOrganizacionAudi.Id,
+            Area = "Desarrollo de software - Audi",
+          };
+
+          context.CoordinadorOrganizacion.Add(coordinadorUser);
+          await context.SaveChangesAsync();
+
+          // Find the organization "Audi México"
+          var organizacion = await context.Organizaciones.FirstOrDefaultAsync(o => o.NombreOrganizacion == "Audi México");
+
+          if (organizacion != null)
+          {
+            // Assign the CoordinadorOrganizacion to the organization
+            coordinadorUser.OrganizacionId = organizacion.OrganizacionId;
+            await context.SaveChangesAsync();
+          }
+        }
+      }
+    }
+
+    //public static async Task SeedOportunidadPracticasAsync(
+    //  UserManager<Users> userManager,
+    //  RoleManager<IdentityRole> roleManager,
+    //  ApplicationDbContext context
     //)
+    //{
+    //  // Obtener las organizaciones existentes (puedes ajustar esto según tus necesidades)
+    //  var organizaciones = await context.Organizaciones.ToListAsync();
+
+    //  foreach (var organizacionExistente in organizaciones)
+    //  {
+    //    // Obtener el coordinador de la organización existente
+    //    var coordinadorExistente = await context.CoordinadorOrganizacion
+    //        .FirstOrDefaultAsync(c => c.OrganizacionId == organizacionExistente.OrganizacionId);
+
+    //    if (coordinadorExistente != null)
     //    {
-    //      // Obtener la organización existente (puedes ajustar esto según tus necesidades)
-    //      var organizacionExistente = await context.Organizaciones.FirstOrDefaultAsync();
-
-    //      if (organizacionExistente != null)
+    //      for (int i = 0; i < 10; i++)
     //      {
-    //        // Obtener el coordinador de la organización existente
-    //        var coordinadorExistente = await context.CoordinadorOrganizacion
-    //            .FirstOrDefaultAsync(c => c.CoordinadorOrganizacionId == organizacionExistente.CoordinadorOrganizacionId);
-
-    //        if (coordinadorExistente != null)
+    //        // Crear una nueva oportunidad de prácticas
+    //        var oportunidadPracticas = new OportunidadesPracticas
     //        {
-    //          // Crear una nueva oportunidad de prácticas
-    //          var oportunidadPracticas = new OportunidadesPracticas
-    //          {
-    //            OrganizacionId = organizacionExistente.OrganizacionId,
-    //            CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
-    //            Descripcion = "Descripción de la oportunidad de prácticas",
-    //            Requisitos = "Requisitos para la oportunidad de prácticas",
-    //            FechaInicio = DateTime.Now,
-    //            FechaFin = DateTime.Now.AddDays(30)
-    //          };
+    //          OrganizacionId = organizacionExistente.OrganizacionId,
+    //          CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
+    //          Descripcion = "Descripción de la oportunidad de prácticas",
+    //          Requisitos = "Requisitos para la oportunidad de prácticas",
+    //          FechaInicio = DateTime.Now,
+    //          FechaFin = DateTime.Now.AddDays(30)
+    //        };
 
-    //          // Asociar la oportunidad de prácticas con la organización existente
-    //          oportunidadPracticas.Organizacion = organizacionExistente;
-    //          oportunidadPracticas.CoordinadorOrganizacion = coordinadorExistente;
+    //        // Asociar la oportunidad de prácticas con la organización existente
+    //        oportunidadPracticas.Organizacion = organizacionExistente;
+    //        oportunidadPracticas.CoordinadorOrganizacion = coordinadorExistente;
 
-    //          // Agregar la oportunidad de prácticas al contexto
-    //          context.OportunidadPracticas.Add(oportunidadPracticas);
-
-    //          // Guardar los cambios en la base de datos
-    //          await context.SaveChangesAsync();
-    //        }
+    //        // Agregar la oportunidad de prácticas al contexto
+    //        context.OportunidadPracticas.Add(oportunidadPracticas);
     //      }
+
+    //      // Guardar los cambios en la base de datos
+    //      await context.SaveChangesAsync();
     //    }
+    //  }
+    //}
+
 
     public static async Task SeedOportunidadPracticasAsync(
     UserManager<Users> userManager,
@@ -272,36 +608,33 @@ namespace GestionPracticasProfesionalesUtp.Data
       {
         // Obtener el coordinador de la organización existente
         var coordinadorExistente = await context.CoordinadorOrganizacion
-            .FirstOrDefaultAsync(c => c.CoordinadorOrganizacionId == organizacionExistente.CoordinadorOrganizacionId);
+            .FirstOrDefaultAsync(c => c.OrganizacionId == organizacionExistente.OrganizacionId);
 
         if (coordinadorExistente != null)
         {
-          for (int i = 0; i < 10; i++)
+          var oportunidadPracticas = new OportunidadesPracticas
           {
-            // Crear una nueva oportunidad de prácticas
-            var oportunidadPracticas = new OportunidadesPracticas
-            {
-              OrganizacionId = organizacionExistente.OrganizacionId,
-              CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
-              Descripcion = "Descripción de la oportunidad de prácticas",
-              Requisitos = "Requisitos para la oportunidad de prácticas",
-              FechaInicio = DateTime.Now,
-              FechaFin = DateTime.Now.AddDays(30)
-            };
+            OrganizacionId = organizacionExistente.OrganizacionId,
+            CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
+            Descripcion = "Descripción de la oportunidad de prácticas ",
+            Requisitos = "Requisitos para la oportunidad de prácticas ",
+            FechaInicio = DateTime.Now,
+            FechaFin = DateTime.Now.AddDays(30)
+          };
 
-            // Asociar la oportunidad de prácticas con la organización existente
-            oportunidadPracticas.Organizacion = organizacionExistente;
-            oportunidadPracticas.CoordinadorOrganizacion = coordinadorExistente;
+          // Asociar la oportunidad de prácticas con la organización existente
+          oportunidadPracticas.Organizacion = organizacionExistente;
+          oportunidadPracticas.CoordinadorOrganizacion = coordinadorExistente;
 
-            // Agregar la oportunidad de prácticas al contexto
-            context.OportunidadPracticas.Add(oportunidadPracticas);
-          }
+          // Agregar la oportunidad de prácticas al contexto
+          context.OportunidadPracticas.Add(oportunidadPracticas);
 
           // Guardar los cambios en la base de datos
           await context.SaveChangesAsync();
         }
       }
     }
+
 
   }
 }

@@ -7,7 +7,7 @@ namespace GestionPracticasProfesionalesUtp.Models
   public class CoordinadorOrganizacion
   {
     [Key]
-    [ForeignKey(nameof(Users))]
+    [ForeignKey(nameof(User))]
     public string CoordinadorOrganizacionId { get; set; }
 
     [Column(TypeName = "nvarchar(150)")]
@@ -17,8 +17,10 @@ namespace GestionPracticasProfesionalesUtp.Models
     // Propiedad de navegación para establecer la relación con Users
     public Users User { get; set; }
 
-    // Propiedad de navegación inversa para establecer la relación uno a muchos con Organizaciones
-    public ICollection<Organizaciones> Organizaciones { get; set; }
+    // Propiedad de navegación inversa para establecer la relación uno a uno con Organizaciones
+    [ForeignKey(nameof(Organizacion))]
+    public string? OrganizacionId { get; set; }
+    public Organizaciones? Organizacion { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación uno a muchos con OportunidadPracticas
     public ICollection<OportunidadesPracticas> OportunidadPracticas { get; set; }

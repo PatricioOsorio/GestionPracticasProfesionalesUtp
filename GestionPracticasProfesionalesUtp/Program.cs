@@ -43,9 +43,9 @@ using (var scope = app.Services.CreateScope())
     await ContextSeed.SeedRolesAsync(userManager, roleManager);
     await ContextSeed.SeedUserSuperadminAsync(userManager, roleManager);
     await ContextSeed.SeedUserStudentAsync(userManager, roleManager, context);
+    await ContextSeed.SeedUserOrganizacionesAsync(userManager, roleManager, context);
     await ContextSeed.SeedUserCoordinadorPracticaEscuelaAsync(userManager, roleManager, context);
     await ContextSeed.SeedUserCoordinadorPracticaOrganizacionAsync(userManager, roleManager, context);
-    await ContextSeed.SeedUserOrganizacionAsync(userManager, roleManager, context);
     await ContextSeed.SeedOportunidadPracticasAsync(userManager, roleManager, context);
   }
   catch (Exception ex)
@@ -54,7 +54,7 @@ using (var scope = app.Services.CreateScope())
     logger.LogError(ex, "An error occurred seeding the DB.");
   }
 }
-// ==========================================
+// =================================Microsoft.EntityFrameworkCore.DbUpdateException: 'An error occurred while saving the entity changes. See the inner exception for details.'
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

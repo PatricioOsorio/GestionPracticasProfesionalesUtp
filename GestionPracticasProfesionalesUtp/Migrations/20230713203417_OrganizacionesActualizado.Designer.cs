@@ -4,6 +4,7 @@ using GestionPracticasProfesionalesUtp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPracticasProfesionalesUtp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713203417_OrganizacionesActualizado")]
+    partial class OrganizacionesActualizado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,11 +34,17 @@ namespace GestionPracticasProfesionalesUtp.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("OrganizacionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CoordinadorOrganizacionId");
 
                     b.HasIndex("OrganizacionId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CoordinadorOrganizacion");
                 });
@@ -360,15 +368,15 @@ namespace GestionPracticasProfesionalesUtp.Migrations
 
             modelBuilder.Entity("GestionPracticasProfesionalesUtp.Models.CoordinadorOrganizacion", b =>
                 {
-                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("CoordinadorOrganizacionId")
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Organizaciones", "Organizacion")
+                        .WithMany("CoordinadorOrganizacion")
+                        .HasForeignKey("OrganizacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Organizaciones", "Organizacion")
-                        .WithMany("CoordinadorOrganizacion")
-                        .HasForeignKey("OrganizacionId");
+                    b.HasOne("GestionPracticasProfesionalesUtp.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Organizacion");
 

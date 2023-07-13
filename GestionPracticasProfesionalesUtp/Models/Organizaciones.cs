@@ -28,15 +28,13 @@ namespace GestionPracticasProfesionalesUtp.Models
     // Propiedad de navegación inversa para establecer la relación uno a muchos con OportunidadPracticas
     public ICollection<OportunidadesPracticas> OportunidadPracticas { get; set; }
 
-    [ForeignKey(nameof(CoordinadorOrganizacion))]
-    [Display(Name = "Coordinador organización")]
-    public string CoordinadorOrganizacionId { get; set; }
 
-    public CoordinadorOrganizacion CoordinadorOrganizacion { get; set; }
+    // Cambia a ICollection<CoordinadorOrganizacion>
+    public ICollection<CoordinadorOrganizacion> CoordinadorOrganizacion { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación con Users
     [ForeignKey(nameof(OrganizacionId))]
-    public Users User { get; set; }
+    public Users? User { get; set; }
 
   }
 }

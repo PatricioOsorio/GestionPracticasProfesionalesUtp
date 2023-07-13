@@ -47,10 +47,10 @@ namespace GestionPracticasProfesionalesUtp.Data
           .OnDelete(DeleteBehavior.Restrict);
 
       // Relación 1 a muchos entre CoordinadorOrganizacion y Organizaciones
-      builder.Entity<CoordinadorOrganizacion>()
-          .HasMany(c => c.Organizaciones)
-          .WithOne(o => o.CoordinadorOrganizacion)
-          .HasForeignKey(o => o.CoordinadorOrganizacionId);
+      builder.Entity<Organizaciones>()
+          .HasMany(o => o.CoordinadorOrganizacion)
+          .WithOne(c => c.Organizacion)
+          .HasForeignKey(c => c.OrganizacionId);
 
       // Establecer relación 1 a muchos entre Organizaciones y OportunidadPracticas
       builder.Entity<Organizaciones>()
