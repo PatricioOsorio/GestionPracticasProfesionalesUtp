@@ -33,7 +33,7 @@ namespace GestionPracticasProfesionalesUtp.Models
 
     [Required]
     [DataType(DataType.Date)]
-    [Display(Name = "Fecga fin")]
+    [Display(Name = "Fecha fin")]
     public DateTime FechaFin { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación muchos a uno con Organizaciones
