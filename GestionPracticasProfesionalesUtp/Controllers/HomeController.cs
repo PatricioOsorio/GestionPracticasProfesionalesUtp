@@ -36,10 +36,13 @@ namespace GestionPracticasProfesionalesUtp.Controllers
 
     public async Task<IActionResult> Publicaciones()
     {
-      var applicationDbContext = _context.OportunidadPracticas.Include(o => o.CoordinadorOrganizacion).Include(o => o.Organizacion);
+      var applicationDbContext = _context.OportunidadPracticas
+        .Include(o => o.CoordinadorOrganizacion)
+        .Include(o => o.Organizacion)
+        .Include(o => o.CoordinadorOrganizacion.User); // Incluir la propiedad de navegación User
       return View(await applicationDbContext.ToListAsync());
     }
-  
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

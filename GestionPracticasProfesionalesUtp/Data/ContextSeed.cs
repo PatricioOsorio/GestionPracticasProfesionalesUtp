@@ -550,51 +550,6 @@ namespace GestionPracticasProfesionalesUtp.Data
       }
     }
 
-    //public static async Task SeedOportunidadPracticasAsync(
-    //  UserManager<Users> userManager,
-    //  RoleManager<IdentityRole> roleManager,
-    //  ApplicationDbContext context
-    //)
-    //{
-    //  // Obtener las organizaciones existentes (puedes ajustar esto según tus necesidades)
-    //  var organizaciones = await context.Organizaciones.ToListAsync();
-
-    //  foreach (var organizacionExistente in organizaciones)
-    //  {
-    //    // Obtener el coordinador de la organización existente
-    //    var coordinadorExistente = await context.CoordinadorOrganizacion
-    //        .FirstOrDefaultAsync(c => c.OrganizacionId == organizacionExistente.OrganizacionId);
-
-    //    if (coordinadorExistente != null)
-    //    {
-    //      for (int i = 0; i < 10; i++)
-    //      {
-    //        // Crear una nueva oportunidad de prácticas
-    //        var oportunidadPracticas = new OportunidadesPracticas
-    //        {
-    //          OrganizacionId = organizacionExistente.OrganizacionId,
-    //          CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
-    //          Descripcion = "Descripción de la oportunidad de prácticas",
-    //          Requisitos = "Requisitos para la oportunidad de prácticas",
-    //          FechaInicio = DateTime.Now,
-    //          FechaFin = DateTime.Now.AddDays(30)
-    //        };
-
-    //        // Asociar la oportunidad de prácticas con la organización existente
-    //        oportunidadPracticas.Organizacion = organizacionExistente;
-    //        oportunidadPracticas.CoordinadorOrganizacion = coordinadorExistente;
-
-    //        // Agregar la oportunidad de prácticas al contexto
-    //        context.OportunidadPracticas.Add(oportunidadPracticas);
-    //      }
-
-    //      // Guardar los cambios en la base de datos
-    //      await context.SaveChangesAsync();
-    //    }
-    //  }
-    //}
-
-
     public static async Task SeedOportunidadPracticasAsync(
     UserManager<Users> userManager,
     RoleManager<IdentityRole> roleManager,
@@ -616,8 +571,8 @@ namespace GestionPracticasProfesionalesUtp.Data
           {
             OrganizacionId = organizacionExistente.OrganizacionId,
             CoordinadorOrganizacionId = coordinadorExistente.CoordinadorOrganizacionId,
-            Descripcion = "Descripción de la oportunidad de prácticas ",
-            Requisitos = "Requisitos para la oportunidad de prácticas ",
+            Descripcion = $"Descripción de la oportunidad de prácticas de {organizacionExistente.NombreOrganizacion}",
+            Requisitos = $"Requisitos para la oportunidad de prácticas de {organizacionExistente.NombreOrganizacion}",
             FechaInicio = DateTime.Now,
             FechaFin = DateTime.Now.AddDays(30)
           };
