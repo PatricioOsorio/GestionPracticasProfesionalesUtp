@@ -1,0 +1,53 @@
+﻿@model GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>OportunidadesPracticas</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Requisitos)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Requisitos)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaFin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaFin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Organizacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Organizacion.OrganizacionId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CoordinadorOrganizacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CoordinadorOrganizacion.CoordinadorOrganizacionId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Publicaciones">Regresar</a>
+</div>

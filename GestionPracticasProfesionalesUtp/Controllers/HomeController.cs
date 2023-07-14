@@ -43,6 +43,24 @@ namespace GestionPracticasProfesionalesUtp.Controllers
       return View(await applicationDbContext.ToListAsync());
     }
 
+    public async Task<IActionResult> Details(int? id)
+    {
+      if (id == null || _context.OportunidadPracticas == null)
+      {
+        return NotFound();
+      }
+
+      var oportunidadesPracticas = await _context.OportunidadPracticas
+          .Include(o => o.CoordinadorOrganizacion)
+          .Include(o => o.Organizacion)
+          .FirstOrDefaultAsync(m => m.OportunidadPracticaId == id);
+      if (oportunidadesPracticas == null)
+      {
+        return NotFound();
+      }
+
+      return View(oportunidadesPracticas);
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
