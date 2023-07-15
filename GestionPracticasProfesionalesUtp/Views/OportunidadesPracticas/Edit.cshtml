@@ -1,59 +1,102 @@
 ﻿@model GestionPracticasProfesionalesUtp.Models.OportunidadesPracticas
 
 @{
-    ViewData["Title"] = "Edit";
+  ViewData["Title"] = "Editar oportunidad de práctica";
 }
 
-<h1>Edit</h1>
+<div class="bg-white rounded mt-4 p-5 shadow-lg">
+  <h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
+  <form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="OportunidadPracticaId" />
 
-<h4>OportunidadesPracticas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="OportunidadPracticaId" />
-            <div class="form-group">
-                <label asp-for="OrganizacionId" class="control-label"></label>
-                <select asp-for="OrganizacionId" class="form-control" asp-items="ViewBag.OrganizacionId"></select>
-                <span asp-validation-for="OrganizacionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CoordinadorOrganizacionId" class="control-label"></label>
-                <select asp-for="CoordinadorOrganizacionId" class="form-control" asp-items="ViewBag.CoordinadorOrganizacionId"></select>
-                <span asp-validation-for="CoordinadorOrganizacionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Requisitos" class="control-label"></label>
-                <input asp-for="Requisitos" class="form-control" />
-                <span asp-validation-for="Requisitos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaInicio" class="control-label"></label>
-                <input asp-for="FechaInicio" class="form-control" />
-                <span asp-validation-for="FechaInicio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaFin" class="control-label"></label>
-                <input asp-for="FechaFin" class="form-control" />
-                <span asp-validation-for="FechaFin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row g-3 mb-3">
+      @if (User.IsInRole("SUPERADMIN"))
+      {
+        <div class="col-md-6">
+          <label asp-for="OrganizacionId" class="control-label"></label>
+          <select id="OrganizacionId" asp-for="OrganizacionId" class="form-control" asp-items="ViewBag.OrganizacionId" required></select>
+          <span asp-validation-for="OrganizacionId" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+          <label asp-for="CoordinadorOrganizacionId" class="control-label"></label>
+          <select id="coordinadorSelect" asp-for="CoordinadorOrganizacionId" class="form-control" required></select>
+          <span asp-validation-for="CoordinadorOrganizacionId" class="text-danger"></span>
+        </div>
+      }
+      else if (User.IsInRole("ORGANIZACION"))
+      {
+        <div class="col-md-6">
+          <label asp-for="OrganizacionId" class="control-label"></label>
+          <input id="OrganizacionId" asp-for="OrganizacionId" class="form-control" readonly value="@ViewData["OrganizacionId"]" />
+          <span asp-validation-for="OrganizacionId" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+          <label asp-for="CoordinadorOrganizacionId" class="control-label"></label>
+          <select id="coordinadorSelect" asp-for="CoordinadorOrganizacionId" class="form-control" required></select>
+          <span asp-validation-for="CoordinadorOrganizacionId" class="text-danger"></span>
+        </div>
+      }
+
+      <div class="col-md-6">
+        <label asp-for="Descripcion" class="control-label"></label>
+        <input asp-for="Descripcion" class="form-control" />
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+      </div>
+      <div class="col-md-6">
+        <label asp-for="Requisitos" class="control-label"></label>
+        <input asp-for="Requisitos" class="form-control" />
+        <span asp-validation-for="Requisitos" class="text-danger"></span>
+      </div>
+      <div class="col-md-6">
+        <label asp-for="FechaInicio" class="control-label"></label>
+        <input asp-for="FechaInicio" class="form-control" />
+        <span asp-validation-for="FechaInicio" class="text-danger"></span>
+      </div>
+      <div class="col-md-6">
+        <label asp-for="FechaFin" class="control-label"></label>
+        <input asp-for="FechaFin" class="form-control" />
+        <span asp-validation-for="FechaFin" class="text-danger"></span>
+      </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Actualizar</button>
+      <a class="btn btn-outline-secondary" asp-action="Index"><i class="fas fa-arrow-left me-1"></i>Regresar</a>
+    </div>
+  </form>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+  <script>
+    $(document).ready(function () {
+      $('#OrganizacionId').change(function () {
+        var organizacionId = $(this).val();
+        updateCoordinadores(organizacionId);
+      });
+
+      // Agrega este bloque de código para manejar la carga inicial
+      var organizacionId = $('#OrganizacionId').val();
+      updateCoordinadores(organizacionId);
+    });
+
+    // Agrega esta función para obtener y actualizar la lista de coordinadores
+    function updateCoordinadores(organizacionId) {
+      $.ajax({
+        url: '@Url.Action("GetCoordinadores", "OportunidadesPracticas")',
+        type: 'GET',
+        data: { organizacionId: organizacionId },
+        success: function (result) {
+          var coordinadorSelect = $('#coordinadorSelect');
+          coordinadorSelect.empty();
+          $.each(result, function (index, coordinador) {
+            coordinadorSelect.append($('<option></option>').val(coordinador.coordinadorOrganizacionId).text(coordinador.nombre));
+          });
+        }
+      });
+    }
+  </script>
 }

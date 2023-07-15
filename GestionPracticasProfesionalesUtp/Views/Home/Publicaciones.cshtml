@@ -35,6 +35,10 @@
     <tbody>
       @foreach (var item in Model)
       {
+        // Formatear las fechas antes de mostrarlas
+        var fechaInicio = item.FechaInicio.ToString("dd/MM/yyyy");
+        var fechaFin = item.FechaFin.ToString("dd/MM/yyyy");
+
         <tr>
           <td>
             @Html.DisplayFor(modelItem => item.Descripcion)
@@ -43,16 +47,16 @@
             @Html.DisplayFor(modelItem => item.Requisitos)
           </td>
           <td>
-            @Html.DisplayFor(modelItem => item.FechaInicio)
+            @fechaInicio
           </td>
           <td>
-            @Html.DisplayFor(modelItem => item.FechaFin)
+            @fechaFin
           </td>
           <td>
             @Html.DisplayFor(modelItem => item.Organizacion.NombreOrganizacion)
           </td>
           <td>
-            @Html.DisplayFor(modelItem => item.CoordinadorOrganizacion.User.Nombre)
+            @(item.CoordinadorOrganizacion.User.Nombre + " " + item.CoordinadorOrganizacion.User.ApellidoPaterno + " " + item.CoordinadorOrganizacion.User.ApellidoMaterno)
           </td>
           <td>
             <a asp-action="Details" asp-route-id="@item.OportunidadPracticaId" class="btn btn-info mx-1"><i class="fa-solid fa-circle-info me-1"></i>Detalles</a>

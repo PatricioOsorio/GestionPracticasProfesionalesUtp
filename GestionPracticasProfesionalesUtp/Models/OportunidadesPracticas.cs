@@ -37,10 +37,10 @@ namespace GestionPracticasProfesionalesUtp.Models
     public DateTime FechaFin { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación muchos a uno con Organizaciones
-    public Organizaciones Organizacion { get; set; }
+    public Organizaciones? Organizacion { get; set; }
 
     // Propiedad de navegación inversa para establecer la relación muchos a uno con CoordinadorOrganizacion
     [Display(Name = "Coordinador de la organizacion")]
-    public CoordinadorOrganizacion CoordinadorOrganizacion { get; set; }
+    public CoordinadorOrganizacion? CoordinadorOrganizacion { get; set; }
   }
 }
