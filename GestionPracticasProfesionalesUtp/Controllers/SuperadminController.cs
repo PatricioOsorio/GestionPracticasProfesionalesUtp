@@ -309,5 +309,10 @@ namespace GestionPracticasProfesionalesUtp.Controllers
 
       return View(viewModel);
     }
+
+    public IActionResult Dashboard()
+    {
+      return View();
+    }
   }
 }
