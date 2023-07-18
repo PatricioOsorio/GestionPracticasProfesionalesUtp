@@ -165,5 +165,39 @@ document.addEventListener('click', (e) => {
       }
     });
   }
+
+  // Alerta borrar usuario
+  if (e.target.matches('#AlertaEliminarCoordinador')) {
+    Swal.fire({
+      title: `¿Eliminar usuario: <span class="text-primary">${e.target.dataset.username}</span>?`,
+      text: 'No podrás revertir esto.',
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, bórralo.',
+      cancelButtonText: '¡No, cancelar!',
+      confirmButtonColor: 'var(--bs-danger)',
+      cancelButtonColor: 'var(--bs-secondary)',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: 'POST',
+          url: '/Organizacion/DeleteUser',
+          data: { id: e.target.dataset.id },
+          cache: false,
+          success: function (response) {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El usuario ha sido eliminado.',
+              icon: 'success',
+              confirmButtonColor: 'var(--bs-primary)',
+            }).then(function () {
+              location.href = '/Organizacion/ListCoordinadorOrganizacion';
+            });
+          },
+        });
+      }
+    });
+  }
 });
 

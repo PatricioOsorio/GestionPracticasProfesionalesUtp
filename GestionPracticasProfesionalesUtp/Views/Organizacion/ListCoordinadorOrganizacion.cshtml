@@ -1,0 +1,53 @@
+﻿@using GestionPracticasProfesionalesUtp.Models;
+@model IEnumerable<CoordinadorOrganizacion>
+
+@{
+  ViewData["Title"] = "Coordinadores de Prácticas de Organización";
+}
+
+<div class="bg-white rounded mt-4 p-5 shadow-lg">
+  <h1 class="text-center fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
+  <a class="btn btn-primary mb-3" asp-action="CreateCoordinadorOrganizacion"><i class="fas fa-user-plus me-1"></i>Crear Coordinador</a>
+
+  @if (Model.Any())
+  {
+    <div class="table-responsive">
+      <table id="MyTable" class="table table-striped table-hover table-borderless align-middle text-center">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Área</th>
+            <th>Email</th>
+            @if (User.IsInRole("SUPERADMIN"))
+            {
+              <th>Organizacion</th>
+            }
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var coordinador in Model)
+          {
+            <tr>
+              <td>@Html.DisplayFor(m => coordinador.User.Nombre)</td>
+              <td>@Html.DisplayFor(m => coordinador.Area)</td>
+              <td>@Html.DisplayFor(m => coordinador.User.Email)</td>
+              @if (User.IsInRole("SUPERADMIN"))
+              {
+                <td>@Html.DisplayFor(m => coordinador.Organizacion.NombreOrganizacion)</td>
+              }
+              <td class="d-flex justify-content-center">
+                <a class="btn btn-warning mx-1" asp-action="EditCoordinadorOrganizacion" asp-route-id="@coordinador.CoordinadorOrganizacionId"><i class="fas fa-edit me-1"></i>Editar</a>
+                <a id="AlertaEliminarCoordinador" class="btn btn-danger mx-1" data-id="@coordinador.CoordinadorOrganizacionId" data-username="@coordinador.User.UserName"><i class="fas fa-minus-circle me-1"></i>Eliminar</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  else
+  {
+    <p>No existen coordinadores de prácticas de organización registrados</p>
+  }
+</div>
